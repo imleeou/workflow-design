@@ -1,0 +1,36 @@
+/** 发起人类型枚举 */
+export enum WorkflowPersonEnum {
+  /** 人员 */
+  Person = 1,
+  /** 部门 */
+  Department = 2,
+}
+
+/** 发起人类型映射 */
+export const WorkflowPersonMap = {
+  [WorkflowPersonEnum.Person]: "人员",
+  [WorkflowPersonEnum.Department]: "部门",
+};
+
+/** 节点类型枚举 */
+export enum WorkflowNodeTypeEnum {
+  /** 发起人 */
+  Initiator = 0,
+  /** 审批人 */
+  Approver = 1,
+  /** 抄送人 */
+  Copy = 2,
+  /** 路由 */
+  Route = 3,
+  /** 分支 */
+  Branch = 4,
+}
+
+/** 节点类型映射 */
+export const WorkflowNodeTypeMap = {
+  [WorkflowNodeTypeEnum.Initiator]: "发起人",
+  [WorkflowNodeTypeEnum.Approver]: "审批人",
+  [WorkflowNodeTypeEnum.Copy]: "抄送人",
+  [WorkflowNodeTypeEnum.Route]: "路由",
+  [WorkflowNodeTypeEnum.Branch]: "分支",
+};

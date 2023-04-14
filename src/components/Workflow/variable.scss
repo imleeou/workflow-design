@@ -1,0 +1,34 @@
+/** 审批节点宽度 */
+$workflow-node-width: 220px;
+/** 节点背景色 */
+$workflow-node-bg: #fff;
+/** 节点圆角大小 */
+$workflow-node-radius: 5px;
+/** 节点头部文字大小 */
+$workflow-node-title-font-size: 12px;
+/** 节点阴影 */
+$workflow-node-shadow: 0 0 3px 0 #1989fa;
+
+.node {
+  width: $workflow-node-width;
+  background-color: $workflow-node-bg;
+  border-radius: $workflow-node-radius;
+  overflow: hidden;
+  &:hover {
+    box-shadow: $workflow-node-shadow;
+    cursor: pointer;
+  }
+
+  .node-header {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: $workflow-node-title-font-size;
+    .el-icon {
+      font-size: 14px;
+      color: #333;
+    }
+  }
+  .node-content {
+    padding: 20px;
+  }
+}
