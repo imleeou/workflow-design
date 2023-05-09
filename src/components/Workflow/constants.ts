@@ -15,15 +15,19 @@ export const WorkflowPersonMap = {
 /** 节点类型枚举 */
 export enum WorkflowNodeTypeEnum {
   /** 发起人 */
-  Initiator = 0,
+  Initiator = 'INITIATOR',
   /** 审批人 */
-  Approver = 1,
+  Approver = 'APPROVER',
   /** 抄送人 */
-  Copy = 2,
-  /** 路由 */
-  Route = 3,
-  /** 分支 */
-  Branch = 4,
+  Copy = 'COPY',
+  /** 条件路由 */
+  Conditions = 'CONDITIONS',
+  /** 条件分支 */
+  ConditionBranch = 'CONDITION',
+  /** 并行路由 */
+  Parallel = 'PARALLELS',
+  /** 并行分支 */
+  ParallelBranch = 'PARALLEL',
 }
 
 /** 节点类型映射 */
@@ -31,6 +35,6 @@ export const WorkflowNodeTypeMap = {
   [WorkflowNodeTypeEnum.Initiator]: "发起人",
   [WorkflowNodeTypeEnum.Approver]: "审批人",
   [WorkflowNodeTypeEnum.Copy]: "抄送人",
-  [WorkflowNodeTypeEnum.Route]: "路由",
-  [WorkflowNodeTypeEnum.Branch]: "分支",
+  [WorkflowNodeTypeEnum.Conditions]: "路由",
+  [WorkflowNodeTypeEnum.ConditionBranch]: "分支",
 };
