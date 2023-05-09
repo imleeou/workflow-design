@@ -6,6 +6,8 @@ $workflow-node-bg: #fff;
 $workflow-node-radius: 5px;
 /** 节点头部文字大小 */
 $workflow-node-title-font-size: 12px;
+/** 节点头部高度 */
+$workflow-node-header-height: 30px;
 /** 节点阴影 */
 $workflow-node-shadow: 0 0 3px 0 #1989fa;
 
@@ -21,7 +23,7 @@ $workflow-node-shadow: 0 0 3px 0 #1989fa;
 
   .node-header {
     width: 100%;
-    padding: 5px 10px;
+    height: $workflow-node-header-height;
     font-size: $workflow-node-title-font-size;
     .el-icon {
       font-size: 14px;

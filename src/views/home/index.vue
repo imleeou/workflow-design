@@ -4,12 +4,7 @@ import { WorkflowData } from "@/components/Workflow/type";
 import Workflow from "@/components/Workflow/index.vue";
 
 /** 保存审批流数据 */
-const WorkflowData = ref<WorkflowData>({
-  id: 1,
-  name: "审批流名称",
-  initiator: [],
-  nodes: null,
-});
+const WorkflowData = ref<WorkflowData>();
 
 const save = () => {
   console.log("保存");

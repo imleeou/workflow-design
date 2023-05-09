@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NodeType } from "./type";
+import { NodeType, WorkflowData } from "./type";
 import { INITIATOR_NODE_INFO } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
 
 interface Props {
-  modelValue: NodeType;
+  modelValue: WorkflowData;
 }
 const props = defineProps<Props>();
 /** 保存审批流config */
-const workflowConfig = ref<NodeType>(props.modelValue);
+const workflowConfig = ref<WorkflowData>(props.modelValue);
 
 /** 初始化 */
 const init = () => {
@@ -24,7 +24,7 @@ init();
 
 <template>
   <div class="workflow-container">
-    <NodeWrap v-model="workflowConfig"></NodeWrap>
+    <NodeWrap v-if="workflowConfig" v-model="workflowConfig"></NodeWrap>
   </div>
 </template>
 

@@ -57,17 +57,17 @@ export const INITIATOR_NODE_INFO: NodeType = {
 export const PERSON_NODE_RENDER_INFO = {
   [WorkflowNodeTypeEnum.Initiator]: {
     icon: "icon-initiator",
-    color: "#FFB800",
+    color: "#7a939d",
     placeholder: "所有人",
   },
   [WorkflowNodeTypeEnum.Approver]: {
     icon: "icon-approver",
-    color: "#1890FF",
+    color: "#f78f5f",
     placeholder: "请选择审批人",
   },
   [WorkflowNodeTypeEnum.Copy]: {
     icon: "icon-copy",
-    color: "#52C41A",
+    color: "#409eff",
     placeholder: "请选择抄送人",
   }
 }

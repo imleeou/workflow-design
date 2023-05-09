@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { NodeType } from "../../type";
 import { Close } from "@element-plus/icons-vue";
-import { WorkflowNodeTypeEnum } from "../../constants";
+import { PERSON_NODE_RENDER_INFO, WorkflowNodeTypeEnum } from "../../constants";
 
 const props = defineProps<{
   /** 节点信息 */
@@ -18,14 +18,11 @@ const mouseOperation = (direction: 0 | 1) => {
   isShowCloseIcon.value = !direction;
 };
 
-/** 选择提示 */
-const pickTip = computed(() => {
-  const TIP_SET = {
-    [WorkflowNodeTypeEnum.Initiator]: "所有人",
-    [WorkflowNodeTypeEnum.Approver]: "请指定审批人",
-    [WorkflowNodeTypeEnum.Copy]: "请设置抄送人",
-  };
-  return TIP_SET[props.modelValue.type as keyof typeof TIP_SET];
+/** 当前节点类型对应的渲染信息 */
+const currentNodeRender = computed(() => {
+  return PERSON_NODE_RENDER_INFO[
+    props.modelValue?.type as keyof typeof PERSON_NODE_RENDER_INFO
+  ];
 });
 </script>
 
@@ -35,13 +32,16 @@ const pickTip = computed(() => {
     @mouseenter="mouseOperation(0)"
     @mouseleave="mouseOperation(1)"
   >
-    <div class="node-header">
+    <div
+      class="node-header"
+      :style="{ backgroundColor: `${currentNodeRender.color}` }"
+    >
       <!-- TODO: 人员节点样式 -->
       <p class="node-name">{{ props.modelValue.name }}</p>
       <el-icon v-show="isShowCloseIcon" class="close-icon"><Close /></el-icon>
     </div>
     <div class="node-content">
-      <div class="pick">{{ pickTip }}</div>
+      <div class="pick">{{ currentNodeRender.placeholder }}</div>
     </div>
   </div>
 </template>
