@@ -1,16 +1,7 @@
 import { WorkflowPersonMap, WorkflowNodeTypeMap } from "./constants";
 
 /** 审批流数据类型 */
-export interface WorkflowData {
-  /** 审批流id */
-  id: number;
-  /** 审批名称 */
-  name: string;
-  /** 发起人信息 */
-  initiator?: PersonType[];
-  /** 节点设置 */
-  nodes: NodeType | RouteNodeType | null;
-}
+export type WorkflowData  = NodeType | undefined | null;
 
 /** 人员信息类型 */
 export interface PersonType {
@@ -25,15 +16,19 @@ export interface PersonType {
 /** 普通节点类型 */
 export interface NodeType {
   /** 节点id */
-  nodeId?: number;
+  id: string;
+  /** 父节点id */
+  parentId: string;
   /** 节点名称 */
-  nodeName: string;
+  name: string;
   /** 节点类型 */
-  nodeType: keyof typeof WorkflowNodeTypeMap;
+  type: keyof typeof WorkflowNodeTypeMap;
   /** 子节点 */
-  childNode?: NodeType | RouteNodeType;
+  children?: NodeType | RouteNodeType;
   /** 节点人员信息选择 */
   nodePerson?: PersonType[];
+  /** 是否校验错误 */
+  error?: boolean;
 }
 
 /** 路由节点类型 */

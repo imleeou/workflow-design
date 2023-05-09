@@ -1,3 +1,5 @@
+import { NodeType } from "./type";
+
 /** 发起人类型枚举 */
 export enum WorkflowPersonEnum {
   /** 人员 */
@@ -15,19 +17,19 @@ export const WorkflowPersonMap = {
 /** 节点类型枚举 */
 export enum WorkflowNodeTypeEnum {
   /** 发起人 */
-  Initiator = 'INITIATOR',
+  Initiator = "INITIATOR",
   /** 审批人 */
-  Approver = 'APPROVER',
+  Approver = "APPROVER",
   /** 抄送人 */
-  Copy = 'COPY',
+  Copy = "COPY",
   /** 条件路由 */
-  Conditions = 'CONDITIONS',
+  Conditions = "CONDITIONS",
   /** 条件分支 */
-  ConditionBranch = 'CONDITION',
+  ConditionBranch = "CONDITION",
   /** 并行路由 */
-  Parallel = 'PARALLELS',
+  Parallel = "PARALLELS",
   /** 并行分支 */
-  ParallelBranch = 'PARALLEL',
+  ParallelBranch = "PARALLEL",
 }
 
 /** 节点类型映射 */
@@ -37,6 +39,15 @@ export const WorkflowNodeTypeMap = {
   [WorkflowNodeTypeEnum.Copy]: "抄送人",
   [WorkflowNodeTypeEnum.Conditions]: "条件路由",
   [WorkflowNodeTypeEnum.ConditionBranch]: "条件分支",
-	[WorkflowNodeTypeEnum.Parallel]: "并行路由",
-	[WorkflowNodeTypeEnum.ParallelBranch]: "并行分支"
+  [WorkflowNodeTypeEnum.Parallel]: "并行路由",
+  [WorkflowNodeTypeEnum.ParallelBranch]: "并行分支",
+};
+
+/** 发起人节点初始信息 */
+export const INITIATOR_NODE_INFO: NodeType = {
+  name: WorkflowNodeTypeMap[WorkflowNodeTypeEnum.Initiator],
+  type: WorkflowNodeTypeEnum.Initiator,
+  id: "INITIATOR-ROOT",
+  children: undefined,
+  parentId: "",
 };

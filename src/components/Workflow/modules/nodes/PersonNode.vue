@@ -25,7 +25,7 @@ const pickTip = computed(() => {
     [WorkflowNodeTypeEnum.Approver]: "请指定审批人",
     [WorkflowNodeTypeEnum.Copy]: "请设置抄送人",
   };
-  return TIP_SET[props.modelValue.nodeType as keyof typeof TIP_SET];
+  return TIP_SET[props.modelValue.type as keyof typeof TIP_SET];
 });
 </script>
 
@@ -37,7 +37,7 @@ const pickTip = computed(() => {
   >
     <div class="node-header">
       <!-- TODO: 人员节点样式 -->
-      <p class="node-name">{{ props.modelValue.nodeName }}</p>
+      <p class="node-name">{{ props.modelValue.name }}</p>
       <el-icon v-show="isShowCloseIcon" class="close-icon"><Close /></el-icon>
     </div>
     <div class="node-content">

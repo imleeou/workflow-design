@@ -1,26 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NodeType, WorkflowData } from "./type";
-import { WorkflowNodeTypeEnum } from "./constants";
+import { NodeType } from "./type";
+import { INITIATOR_NODE_INFO } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
-import PersonNode from "./modules/nodes/PersonNode.vue";
 
 interface Props {
-  modelValue: WorkflowData;
+  modelValue: NodeType;
 }
 const props = defineProps<Props>();
 /** 保存审批流config */
-const workflowConfig = ref<WorkflowData>(props.modelValue),
-  /** 发起人节点数据 */
-  initiatorNode = ref<NodeType>({
-    nodeName: "发起人",
-    nodeType: WorkflowNodeTypeEnum.Initiator,
-  });
+const workflowConfig = ref<NodeType>(props.modelValue);
 
+/** 初始化 */
 const init = () => {
-  if (workflowConfig.value.initiator?.length && workflowConfig.value.nodes) {
-    // 发起人节点回显数据
-    initiatorNode.value = { ...workflowConfig.value.nodes };
+  if (!workflowConfig.value) {
+    workflowConfig.value = {
+      ...INITIATOR_NODE_INFO,
+    };
   }
 };
 init();
@@ -28,7 +24,7 @@ init();
 
 <template>
   <div class="workflow-container">
-    <PersonNode v-model="initiatorNode"></PersonNode>
+    <NodeWrap v-model="workflowConfig"></NodeWrap>
   </div>
 </template>
 
