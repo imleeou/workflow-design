@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { NodeType } from "../type";
-import PersonNode from "./PersonNode.vue";
+import PersonNode from "./nodes/PersonNode.vue";
 
 const props = defineProps<{
     modelValue: NodeType;

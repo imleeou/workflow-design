@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { NodeType } from "../type";
+import { NodeType } from "../../type";
 import { Close } from "@element-plus/icons-vue";
-import { WorkflowNodeTypeEnum } from "../constants";
+import { WorkflowNodeTypeEnum } from "../../constants";
 
 const props = defineProps<{
   /** 节点信息 */

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { NodeType, WorkflowData } from "./type";
 import { WorkflowNodeTypeEnum } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
-import PersonNode from "./modules/PersonNode.vue";
+import PersonNode from "./modules/nodes/PersonNode.vue";
 
 interface Props {
   modelValue: WorkflowData;
