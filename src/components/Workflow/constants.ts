@@ -51,3 +51,23 @@ export const INITIATOR_NODE_INFO: NodeType = {
   children: undefined,
   parentId: "",
 };
+
+
+/** 人员节点渲染信息 */
+export const PERSON_NODE_RENDER_INFO = {
+  [WorkflowNodeTypeEnum.Initiator]: {
+    icon: "icon-initiator",
+    color: "#FFB800",
+    placeholder: "所有人",
+  },
+  [WorkflowNodeTypeEnum.Approver]: {
+    icon: "icon-approver",
+    color: "#1890FF",
+    placeholder: "请选择审批人",
+  },
+  [WorkflowNodeTypeEnum.Copy]: {
+    icon: "icon-copy",
+    color: "#52C41A",
+    placeholder: "请选择抄送人",
+  }
+}
