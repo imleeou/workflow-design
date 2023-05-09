@@ -35,6 +35,8 @@ export const WorkflowNodeTypeMap = {
   [WorkflowNodeTypeEnum.Initiator]: "发起人",
   [WorkflowNodeTypeEnum.Approver]: "审批人",
   [WorkflowNodeTypeEnum.Copy]: "抄送人",
-  [WorkflowNodeTypeEnum.Conditions]: "路由",
-  [WorkflowNodeTypeEnum.ConditionBranch]: "分支",
+  [WorkflowNodeTypeEnum.Conditions]: "条件路由",
+  [WorkflowNodeTypeEnum.ConditionBranch]: "条件分支",
+	[WorkflowNodeTypeEnum.Parallel]: "并行路由",
+	[WorkflowNodeTypeEnum.ParallelBranch]: "并行分支"
 };
