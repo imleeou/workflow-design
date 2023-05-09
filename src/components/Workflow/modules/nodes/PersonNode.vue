@@ -47,7 +47,7 @@ const pickTip = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@import "../variable.scss";
+@import "../../variable.scss";
 
 .person-node {
   .node-header {
