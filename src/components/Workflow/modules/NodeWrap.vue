@@ -11,11 +11,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <PersonNode v-model="nodeData"></PersonNode>
+  <div class="node-wrap">
+    <PersonNode v-model="nodeData"></PersonNode>
+    <AddNode></AddNode>
+  </div>
 </template>
 
 <style scoped lang="scss">
 @import "../variable.scss";
-
-
 </style>
