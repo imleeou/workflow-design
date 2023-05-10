@@ -25,12 +25,24 @@ $workflow-node-shadow: 0 0 3px 0 #1989fa;
     width: 100%;
     height: $workflow-node-header-height;
     font-size: $workflow-node-title-font-size;
-    .el-icon {
-      font-size: 14px;
-      color: #333;
+    color: #fff;
+    font-size: 12px;
+    padding: 0 5px;
+    .node-name {
+      .wf-iconfont {
+        margin-right: 5px;
+      }
     }
   }
   .node-content {
     padding: 20px;
+    font-size: 14px;
+    position: relative;
+    .arrow-right {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }

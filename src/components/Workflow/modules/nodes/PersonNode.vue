@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { NodeType } from "../../type";
-import { Close } from "@element-plus/icons-vue";
+import { Close, ArrowRight } from "@element-plus/icons-vue";
 import { PERSON_NODE_RENDER_INFO, WorkflowNodeTypeEnum } from "../../constants";
 
 const props = defineProps<{
@@ -36,12 +36,15 @@ const currentNodeRender = computed(() => {
       class="node-header"
       :style="{ backgroundColor: `${currentNodeRender.color}` }"
     >
-      <!-- TODO: 人员节点样式 -->
-      <p class="node-name">{{ props.modelValue.name }}</p>
+      <p class="node-name">
+        <i :class="['wf-iconfont', currentNodeRender.icon]"></i>
+        <span>{{ props.modelValue.name }}</span>
+      </p>
       <el-icon v-show="isShowCloseIcon" class="close-icon"><Close /></el-icon>
     </div>
     <div class="node-content">
       <div class="pick">{{ currentNodeRender.placeholder }}</div>
+      <el-icon class="arrow-right"><ArrowRight /></el-icon>
     </div>
   </div>
 </template>
