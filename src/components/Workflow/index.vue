@@ -25,6 +25,9 @@ init();
 <template>
   <div class="workflow-container">
     <NodeWrap v-if="workflowConfig" v-model="workflowConfig"></NodeWrap>
+    <div class="process-end">
+      <div class="button">流程结束</div>
+    </div>
   </div>
 </template>
 
@@ -36,5 +39,18 @@ init();
   display: flex;
   flex-direction: column;
   align-items: center;
+  .process-end {
+    padding-bottom: 50px;
+    margin: 0 auto;
+    .button {
+      width: 100px;
+      padding: 5px 10px;
+      margin: 0 auto;
+      text-align: center;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    }
+  }
 }
 </style>
