@@ -4,7 +4,7 @@ import { WorkflowData } from "@/components/Workflow/type";
 import Workflow from "@/components/Workflow/index.vue";
 
 /** 保存审批流数据 */
-const WorkflowData = ref<WorkflowData>();
+const workflowData = ref<WorkflowData>();
 
 const save = () => {
   console.log("保存");
@@ -16,7 +16,7 @@ const save = () => {
     <el-button @click="save">保存</el-button>
     <el-button type="primary">发布</el-button>
   </header>
-  <Workflow v-model="WorkflowData"></Workflow>
+  <Workflow v-model="workflowData"></Workflow>
 </template>
 
 <style scoped lang="scss">
