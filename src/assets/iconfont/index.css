@@ -16,7 +16,7 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
-/* 审批人 */
+/* 抄送人 */
 .icon-copy::before {
   content: "\e71c";
 }
@@ -24,13 +24,13 @@
 .icon-initiator::before {
   content: "\e61c";
 }
-/* 抄送人 */
+/* 审批人 */
 .icon-approver::before {
   content: "\e71e";
 }
 /* 条件分支 */
 .icon-conditions::before {
-  content: "\e686;";
+  content: "\e686";
 }
 /* 并行分支 */
 .icon-parallel::before {

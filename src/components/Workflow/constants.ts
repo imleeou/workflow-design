@@ -1,4 +1,4 @@
-import { NodeType } from "./type";
+import { AddNodeType, NodeType } from "./type";
 
 /** 发起人类型枚举 */
 export enum WorkflowPersonEnum {
@@ -70,3 +70,87 @@ export const PERSON_NODE_RENDER_INFO = {
 		placeholder: "请选择抄送人"
 	}
 };
+
+/** 添加节点的 节点类型数据 */
+export const WORKFLOW_ADD_NODE_TYPE_LIST: AddNodeType[] = [
+	{
+		type: WorkflowNodeTypeEnum.Approver,
+		name: "审批人",
+		icon: "icon-approver",
+		color: "#ff943e",
+		defaultConfig: {
+			name: "审核人",
+			type: WorkflowNodeTypeEnum.Approver,
+			config: undefined
+		}
+	},
+	{
+		type: WorkflowNodeTypeEnum.Copy,
+		name: "抄送人",
+		icon: "icon-copy",
+		color: "#3296fa",
+		defaultConfig: {
+			name: "抄送人",
+			type: WorkflowNodeTypeEnum.Copy,
+			config: undefined
+		}
+	},
+	{
+		type: WorkflowNodeTypeEnum.ConditionBranch,
+		name: "条件分支",
+		icon: "icon-conditions",
+		color: "#15bc83",
+		defaultConfig: {
+			name: "路由",
+			type: WorkflowNodeTypeEnum.Conditions,
+			config: undefined,
+			conditionNode: [
+				{
+					id: "",
+					name: "条件1",
+					type: WorkflowNodeTypeEnum.ConditionBranch,
+					priorityLevel: 1,
+					children: undefined,
+					config: undefined
+				},
+				{
+					id: "",
+					name: "条件2",
+					type: WorkflowNodeTypeEnum.ConditionBranch,
+					priorityLevel: 2,
+					children: undefined,
+					config: undefined
+				}
+			],
+			children: undefined
+		}
+	},
+	{
+		type: WorkflowNodeTypeEnum.ParallelBranch,
+		name: "并行分支",
+		icon: "icon-parallel",
+		color: "#718dff",
+		defaultConfig: {
+			name: "并行路由",
+			type: WorkflowNodeTypeEnum.Parallel,
+			config: undefined,
+			branchs: [
+				{
+					id: "",
+					name: "分支1",
+					type: WorkflowNodeTypeEnum.ParallelBranch,
+					children: undefined,
+					config: undefined
+				},
+				{
+					id: "",
+					name: "分支2",
+					type: WorkflowNodeTypeEnum.ParallelBranch,
+					children: undefined,
+					config: undefined
+				}
+			],
+			children: undefined
+		}
+	}
+];
