@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { NodeType } from "../../type";
+import { NodeType, WorkflowNodeType } from "../../type";
 import { Close, ArrowRight } from "@element-plus/icons-vue";
-import { PERSON_NODE_RENDER_INFO } from "../../constants";
+import { PERSON_NODE_RENDER_INFO, WorkflowNodeTypeEnum } from "../../constants";
 
 const props = defineProps<{
-	/** 节点信息 */
-	modelValue: NodeType;
-}>();
+		/** 节点信息 */
+		modelValue: NodeType;
+	}>(),
+	emits = defineEmits<{
+		(e: "update:modelValue", modelValue: WorkflowNodeType): void;
+	}>();
 /** 删除图标是否显示 */
 const isShowCloseIcon = ref(false);
 
@@ -16,6 +19,16 @@ const isShowCloseIcon = ref(false);
  */
 const mouseOperation = (direction: 0 | 1) => {
 	isShowCloseIcon.value = !direction;
+};
+
+/** 删除人员节点 */
+const deletePersonNode = () => {
+	const child = props.modelValue?.children
+		? ({
+				...props.modelValue?.children
+		  } as NodeType)
+		: undefined;
+	emits("update:modelValue", child);
 };
 
 /** 当前节点类型对应的渲染信息 */
@@ -31,7 +44,12 @@ const currentNodeRender = computed(() => {
 				<i :class="['wf-iconfont', currentNodeRender.icon]"></i>
 				<span>{{ props.modelValue.name }}</span>
 			</p>
-			<el-icon v-show="isShowCloseIcon" class="close-icon"><Close /></el-icon>
+			<el-icon
+				v-show="isShowCloseIcon && modelValue.type !== WorkflowNodeTypeEnum.Initiator"
+				class="close-icon"
+				@click.stop="deletePersonNode"
+				><Close
+			/></el-icon>
 		</div>
 		<div class="node-content">
 			<div class="pick">{{ currentNodeRender.placeholder }}</div>
