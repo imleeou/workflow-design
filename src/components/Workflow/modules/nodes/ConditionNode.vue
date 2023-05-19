@@ -17,15 +17,6 @@ const props = defineProps<{
 
 const nodeConfig = ref<WorkflowNodeType>(props.modelValue),
 	hoverItem = ref<WorkflowNodeType>();
-watch(
-	() => props.modelValue,
-	val => {
-		nodeConfig.value = val;
-	},
-	{
-		deep: true
-	}
-);
 
 watch(
 	() => nodeConfig.value,
