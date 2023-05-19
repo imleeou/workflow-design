@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { NodeType } from "../type";
 import PersonNode from "./nodes/PersonNode.vue";
+import AddNode from "./nodes/AddNode.vue";
 import { WorkflowNodeTypeEnum } from "../constants";
 
 const props = defineProps<{
@@ -16,8 +17,10 @@ console.log("WorkflowNodeTypeEnum", WorkflowNodeTypeEnum.Approver);
 <template>
 	<div class="node-wrap">
 		<PersonNode v-model="nodeData"></PersonNode>
-		<AddNode></AddNode>
+		<AddNode v-model:node-children="nodeData.children"></AddNode>
 	</div>
+	<!-- NodeWrap 递归渲染 -->
+	<NodeWrap v-if="nodeData.children" v-model="nodeData.children"></NodeWrap>
 </template>
 
 <style scoped lang="scss">
