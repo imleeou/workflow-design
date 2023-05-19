@@ -1,38 +1,45 @@
 <script setup lang="ts">
 import { Plus } from "@element-plus/icons-vue";
 import { WORKFLOW_ADD_NODE_TYPE_LIST } from "../../constants";
-import { AddNodeType, WorkflowNodeType } from "../../type";
+import { AddNodeType, NodeType, WorkflowNodeType } from "../../type";
 
 const props = withDefaults(
-	defineProps<{
-		placement?:
-			| "top"
-			| "top-start"
-			| "top-end"
-			| "bottom"
-			| "bottom-start"
-			| "bottom-end"
-			| "left"
-			| "left-start"
-			| "left-end"
-			| "right"
-			| "right-start"
-			| "right-end";
-		trigger?: "click" | "hover" | "focus" | "contextmenu";
-		/** 延迟关闭 */
-		hideAfter?: number;
-		/** 子节点数据 */
-		nodeChildren: WorkflowNodeType;
-	}>(),
-	{
-		placement: "bottom-start",
-		trigger: "hover",
-		hideAfter: 2000
-	}
-);
+		defineProps<{
+			placement?:
+				| "top"
+				| "top-start"
+				| "top-end"
+				| "bottom"
+				| "bottom-start"
+				| "bottom-end"
+				| "left"
+				| "left-start"
+				| "left-end"
+				| "right"
+				| "right-start"
+				| "right-end";
+			trigger?: "click" | "hover" | "focus" | "contextmenu";
+			/** 延迟关闭 */
+			hideAfter?: number;
+			/** 子节点数据 */
+			nodeChildren: WorkflowNodeType;
+		}>(),
+		{
+			placement: "bottom-start",
+			trigger: "hover",
+			hideAfter: 0
+		}
+	),
+	emits = defineEmits<{
+		(e: "update:nodeChildren", nodeChildrenValue: WorkflowNodeType): void;
+	}>();
 
-const addNode = (n: AddNodeType) => {
-	console.log("n", n);
+const addNode = (node: AddNodeType) => {
+	const defaultConfig: NodeType = JSON.parse(JSON.stringify(node.defaultConfig));
+	emits("update:nodeChildren", {
+		...defaultConfig,
+		children: props.nodeChildren ? { ...props.nodeChildren } : undefined
+	});
 };
 </script>
 
