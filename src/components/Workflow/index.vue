@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { WorkflowNodeType } from "./type";
 import { INITIATOR_NODE_INFO } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
@@ -7,9 +7,33 @@ import NodeWrap from "./modules/NodeWrap.vue";
 interface Props {
 	modelValue: WorkflowNodeType;
 }
-const props = defineProps<Props>();
+const props = defineProps<Props>(),
+	emits = defineEmits<{
+		(e: "update:modelValue", modelValue: WorkflowNodeType): void;
+	}>();
 /** 保存审批流config */
 const workflowConfig = ref<WorkflowNodeType>(props.modelValue);
+
+watch(
+	() => props.modelValue,
+	() => {
+		workflowConfig.value = props.modelValue;
+	},
+	{
+		deep: true
+	}
+);
+
+watch(
+	() => workflowConfig.value,
+	val => {
+		console.log("总数据更新", val);
+		emits("update:modelValue", val);
+	},
+	{
+		deep: true
+	}
+);
 
 /** 初始化 */
 const init = () => {
@@ -17,6 +41,7 @@ const init = () => {
 		workflowConfig.value = {
 			...INITIATOR_NODE_INFO
 		};
+		emits("update:modelValue", workflowConfig.value);
 	}
 };
 init();
