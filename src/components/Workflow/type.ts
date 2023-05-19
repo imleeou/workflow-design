@@ -24,7 +24,7 @@ export interface NodeType {
 	/** 节点类型 */
 	type: keyof typeof WorkflowNodeTypeMap;
 	/** 子节点 */
-	children?: NodeType;
+	children?: WorkflowNodeType;
 	/** 节点人员信息选择 */
 	nodePerson?: PersonType[];
 	/** 是否校验错误 */
@@ -34,11 +34,11 @@ export interface NodeType {
 	/** 条件列表 */
 	conditionList?: ConditionType[];
 	/** 条件节点 */
-	conditionNode?: NodeType[];
+	conditionNode?: WorkflowNodeType[];
 	/** 条件节点优先级 */
 	priorityLevel?: number;
 	/** 并行分支路由 */
-	branchs?: NodeType[];
+	branchs?: WorkflowNodeType[];
 }
 
 /** 条件数据类型 */
