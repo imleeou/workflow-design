@@ -57,10 +57,11 @@ init();
 </template>
 
 <style scoped lang="scss">
+@import "./variable.scss";
 .workflow-container {
 	width: 100%;
 	padding: 50px 0;
-	background-color: #f5f5f5;
+	background-color: $workflow-bg;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

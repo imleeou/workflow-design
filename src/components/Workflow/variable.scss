@@ -1,3 +1,5 @@
+/** workflow 背景色 */
+$workflow-bg: #f5f5f5;
 /** 审批节点宽度 */
 $workflow-node-width: 220px;
 /** 节点背景色 */
@@ -15,39 +17,43 @@ $workflow-add-btn-bg: #1989fa;
 $workflow-add-btn-hover-bg: #469df5;
 /** 连接线颜色 */
 $workflow-line-color: #cacaca;
+/** 节点圆角大小 */
+$workflow-node-radius: 5px;
+/** 条件头部标题颜色 */
+$workflow-condition-title-color: #15bca3;
 
 .node {
-  width: $workflow-node-width;
-  background-color: $workflow-node-bg;
-  border-radius: $workflow-node-radius;
-  overflow: hidden;
-  &:hover {
-    box-shadow: $workflow-node-shadow;
-    cursor: pointer;
-  }
+	width: $workflow-node-width;
+	background-color: $workflow-node-bg;
+	border-radius: $workflow-node-radius;
+	overflow: hidden;
+	&:hover {
+		box-shadow: $workflow-node-shadow;
+		cursor: pointer;
+	}
 
-  .node-header {
-    width: 100%;
-    height: $workflow-node-header-height;
-    font-size: $workflow-node-title-font-size;
-    color: #fff;
-    font-size: 12px;
-    padding: 0 5px;
-    .node-name {
-      .wf-iconfont {
-        margin-right: 5px;
-      }
-    }
-  }
-  .node-content {
-    padding: 20px;
-    font-size: 14px;
-    position: relative;
-    .arrow-right {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
+	.node-header {
+		width: 100%;
+		height: $workflow-node-header-height;
+		font-size: $workflow-node-title-font-size;
+		color: #fff;
+		font-size: 12px;
+		padding: 0 5px;
+		.node-name {
+			.wf-iconfont {
+				margin-right: 5px;
+			}
+		}
+	}
+	.node-content {
+		padding: 20px;
+		font-size: 14px;
+		position: relative;
+		.arrow-right {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
 }
