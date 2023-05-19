@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Plus } from "@element-plus/icons-vue";
-import { WORKFLOW_ADD_NODE_TYPE_LIST } from "../../constants";
+import { WORKFLOW_ADD_NODE_TYPE_LIST, WorkflowNodeTypeEnum } from "../../constants";
 import { AddNodeType, NodeType, WorkflowNodeType } from "../../type";
+import { getUniqueId } from "../../utils";
 
 const props = withDefaults(
 		defineProps<{
@@ -36,6 +37,17 @@ const props = withDefaults(
 
 const addNode = (node: AddNodeType) => {
 	const defaultConfig: NodeType = JSON.parse(JSON.stringify(node.defaultConfig));
+	defaultConfig.id = getUniqueId(defaultConfig.type);
+	// 条件路由
+	if (defaultConfig.type === WorkflowNodeTypeEnum.Conditions) {
+		defaultConfig.conditionNode = defaultConfig.conditionNode?.map(item => {
+			return {
+				...item,
+				parentId: defaultConfig.id,
+				id: getUniqueId(WorkflowNodeTypeEnum.ConditionBranch)
+			} as WorkflowNodeType;
+		});
+	}
 	emits("update:nodeChildren", {
 		...defaultConfig,
 		children: props.nodeChildren ? { ...props.nodeChildren } : undefined
