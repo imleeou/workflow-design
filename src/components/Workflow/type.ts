@@ -1,7 +1,7 @@
 import { WorkflowPersonMap, WorkflowNodeTypeMap, WorkflowNodeTypeEnum } from "./constants";
 
 /** 审批流数据类型 */
-export type WorkflowData = NodeType | undefined | null;
+export type WorkflowNodeType = NodeType | undefined | null;
 
 /** 人员信息类型 */
 export interface PersonType {

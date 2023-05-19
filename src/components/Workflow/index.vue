@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { WorkflowData } from "./type";
+import { WorkflowNodeType } from "./type";
 import { INITIATOR_NODE_INFO } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
 
 interface Props {
-	modelValue: WorkflowData;
+	modelValue: WorkflowNodeType;
 }
 const props = defineProps<Props>();
 /** 保存审批流config */
-const workflowConfig = ref<WorkflowData>(props.modelValue);
+const workflowConfig = ref<WorkflowNodeType>(props.modelValue);
 
 /** 初始化 */
 const init = () => {

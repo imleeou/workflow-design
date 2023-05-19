@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus } from "@element-plus/icons-vue";
 import { WORKFLOW_ADD_NODE_TYPE_LIST } from "../../constants";
-import { AddNodeType } from "../../type";
+import { AddNodeType, WorkflowNodeType } from "../../type";
 
 const props = withDefaults(
 	defineProps<{
@@ -21,11 +21,13 @@ const props = withDefaults(
 		trigger?: "click" | "hover" | "focus" | "contextmenu";
 		/** 延迟关闭 */
 		hideAfter?: number;
+		/** 子节点数据 */
+		nodeChildren: WorkflowNodeType;
 	}>(),
 	{
 		placement: "bottom-start",
 		trigger: "hover",
-		hideAfter: 20000
+		hideAfter: 2000
 	}
 );
 
@@ -110,7 +112,7 @@ const addNode = (n: AddNodeType) => {
 		background-color: #f8f9f9;
 		border: 1px solid #f8f9f9;
 		border-radius: $workflow-node-radius;
-		margin-top: 10px;
+		margin: 5px 0;
 		&:hover {
 			background-color: #ffffff;
 			box-shadow: 0 0 10px 0 #d6d6d6;

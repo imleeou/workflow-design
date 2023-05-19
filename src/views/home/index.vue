@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { WorkflowData } from "@/components/Workflow/type";
+import { WorkflowNodeType } from "@/components/Workflow/type";
 import Workflow from "@/components/Workflow/index.vue";
 
 /** 保存审批流数据 */
-const workflowData = ref<WorkflowData>();
+const workflowData = ref<WorkflowNodeType>();
 
 const save = () => {
   console.log("保存");
