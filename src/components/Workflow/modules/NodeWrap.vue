@@ -4,6 +4,7 @@ import { NodeType } from "../type";
 import PersonNode from "./nodes/PersonNode.vue";
 import AddNode from "./nodes/AddNode.vue";
 import ConditionNode from "./nodes/ConditionNode.vue";
+import ParallelBranchNode from "./nodes/ParallelBranchNode.vue";
 import { WorkflowNodeTypeEnum } from "../constants";
 
 const props = defineProps<{
@@ -47,6 +48,10 @@ watch(
 			v-model="nodeData"
 		></PersonNode>
 		<ConditionNode v-else-if="props.modelValue.type === WorkflowNodeTypeEnum.Conditions" v-model="nodeData"></ConditionNode>
+		<ParallelBranchNode
+			v-else-if="props.modelValue.type === WorkflowNodeTypeEnum.Parallel"
+			v-model="nodeData"
+		></ParallelBranchNode>
 		<AddNode v-if="nodeData" v-model:node-children="nodeData.children"></AddNode>
 	</div>
 	<!-- NodeWrap 递归渲染 -->

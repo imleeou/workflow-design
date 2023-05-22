@@ -21,6 +21,8 @@ $workflow-line-color: #cacaca;
 $workflow-node-radius: 5px;
 /** 条件头部标题颜色 */
 $workflow-condition-title-color: #15bca3;
+/** 并行分支头部标题颜色 */
+$workflow-parallel-title-color: #718dff;
 
 .node {
 	width: $workflow-node-width;
