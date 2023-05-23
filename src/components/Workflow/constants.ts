@@ -1,4 +1,4 @@
-import { AddNodeType, NodeType } from "./type";
+import { AddNodeType, NodeType } from "./types";
 
 /** 正则表达式，标识只能输入数字、字母、-、_ */
 export const WORKFLOW_ID_REG = /[^a-zA-Z0-9_-]+/g;

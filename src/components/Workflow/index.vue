@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { WorkflowNodeType } from "./type";
+import { WorkflowNodeType } from "./types";
 import { INITIATOR_NODE_INFO } from "./constants";
 import NodeWrap from "./modules/NodeWrap.vue";
 

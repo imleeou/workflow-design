@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { WorkflowNodeType } from "@/components/Workflow/type";
+import { WorkflowNodeType } from "@/components/Workflow/types";
 import Workflow from "@/components/Workflow/index.vue";
 
 /** 保存审批流数据 */

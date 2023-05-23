@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, watch } from "vue";
-import { WorkflowNodeType } from "../type";
+import { WorkflowNodeType } from "../types";
 import { WorkflowNodeTypeEnum, WORKFLOW_ID_REG } from "../constants";
 import InitiatorForm from "./drawerForm/InitiatorForm.vue";
 

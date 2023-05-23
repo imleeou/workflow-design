@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { WorkflowNodeType } from "../../type";
+import { WorkflowNodeType } from "../../types";
 interface Props {
 	nodeConfig: WorkflowNodeType;
 }

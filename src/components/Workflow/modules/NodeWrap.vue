@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { NodeType, WorkflowNodeType } from "../type";
+import { NodeType, WorkflowNodeType } from "../types";
 import PersonNode from "./nodes/PersonNode.vue";
 import AddNode from "./nodes/AddNode.vue";
 import ConditionNode from "./nodes/ConditionNode.vue";

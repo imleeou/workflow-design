@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus } from "@element-plus/icons-vue";
 import { WORKFLOW_ADD_NODE_TYPE_LIST, WorkflowNodeTypeEnum } from "../../constants";
-import { AddNodeType, NodeType, WorkflowNodeType } from "../../type";
+import { AddNodeType, NodeType, WorkflowNodeType } from "../../types";
 import { getUniqueId } from "../../utils";
 import { ref } from "vue";
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch, ref } from "vue";
 import { ArrowLeft, ArrowRight, Close } from "@element-plus/icons-vue";
-import { WorkflowNodeType, NodeType } from "../../type";
+import { WorkflowNodeType, NodeType } from "../../types";
 import AddNode from "./AddNode.vue";
 import { WorkflowNodeTypeEnum } from "../../constants";
 import NodeWrap from "../NodeWrap.vue";

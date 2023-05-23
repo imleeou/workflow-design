@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { NodeType, WorkflowNodeType } from "../../type";
+import { NodeType, WorkflowNodeType } from "../../types";
 import { Close, ArrowRight } from "@element-plus/icons-vue";
 import { PERSON_NODE_RENDER_INFO, WorkflowNodeTypeEnum } from "../../constants";
 
