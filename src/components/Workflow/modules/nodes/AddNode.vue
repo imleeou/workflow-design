@@ -24,6 +24,8 @@ const props = withDefaults(
 			hideAfter?: number;
 			/** 子节点数据 */
 			nodeChildren: WorkflowNodeType;
+			/** 父节点数据 */
+			parentNode: NodeType;
 		}>(),
 		{
 			placement: "bottom-start",
@@ -45,11 +47,22 @@ const addNode = (node: AddNodeType) => {
 				...item,
 				parentId: defaultConfig.id,
 				id: getUniqueId(WorkflowNodeTypeEnum.ConditionBranch)
-			} as WorkflowNodeType;
+			} as NodeType;
+		});
+	}
+	// 并行路由
+	else if (defaultConfig.type === WorkflowNodeTypeEnum.Parallel) {
+		defaultConfig.branchs = defaultConfig.branchs?.map(item => {
+			return {
+				...item,
+				parentId: defaultConfig.id,
+				id: getUniqueId(WorkflowNodeTypeEnum.ParallelBranch)
+			} as NodeType;
 		});
 	}
 	emits("update:nodeChildren", {
 		...defaultConfig,
+		parentId: props.parentNode.id,
 		children: props.nodeChildren ? { ...props.nodeChildren } : undefined
 	});
 };

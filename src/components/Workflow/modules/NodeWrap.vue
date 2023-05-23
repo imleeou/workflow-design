@@ -52,7 +52,7 @@ watch(
 			v-else-if="props.modelValue.type === WorkflowNodeTypeEnum.Parallel"
 			v-model="nodeData"
 		></ParallelBranchNode>
-		<AddNode v-if="nodeData" v-model:node-children="nodeData.children"></AddNode>
+		<AddNode v-if="nodeData" v-model:node-children="nodeData.children" :parent-node="nodeData"></AddNode>
 	</div>
 	<!-- NodeWrap 递归渲染 -->
 	<NodeWrap v-if="nodeData?.children" v-model="nodeData.children"></NodeWrap>

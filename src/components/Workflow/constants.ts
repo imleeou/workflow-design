@@ -101,7 +101,7 @@ export const WORKFLOW_ADD_NODE_TYPE_LIST: AddNodeType[] = [
 		icon: "icon-conditions",
 		color: "#15bc83",
 		defaultConfig: {
-			name: "路由",
+			name: "条件路由",
 			type: WorkflowNodeTypeEnum.Conditions,
 			config: undefined,
 			conditionNode: [
