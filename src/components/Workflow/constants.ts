@@ -104,7 +104,7 @@ export const WORKFLOW_ADD_NODE_TYPE_LIST: AddNodeType[] = [
 			name: "条件路由",
 			type: WorkflowNodeTypeEnum.Conditions,
 			config: undefined,
-			conditionNode: [
+			branchs: [
 				{
 					id: "",
 					name: "条件1",

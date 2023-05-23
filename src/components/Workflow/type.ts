@@ -33,11 +33,9 @@ export interface NodeType {
 	config?: NodeConfigType;
 	/** 条件列表 */
 	conditionList?: ConditionType[];
-	/** 条件节点 */
-	conditionNode?: WorkflowNodeType[];
 	/** 条件节点优先级 */
 	priorityLevel?: number;
-	/** 并行分支路由 */
+	/** 路由分支 */
 	branchs?: WorkflowNodeType[];
 }
 

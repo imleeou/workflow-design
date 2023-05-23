@@ -30,8 +30,8 @@ watch(
 
 /** 添加条件 */
 const addCondition = () => {
-	const len = nodeConfig.value?.conditionNode?.length || 0;
-	nodeConfig.value?.conditionNode?.push({
+	const len = nodeConfig.value?.branchs?.length || 0;
+	nodeConfig.value?.branchs?.push({
 		id: getUniqueId(WorkflowNodeTypeEnum.ConditionBranch),
 		name: `条件${len + 1}`,
 		priorityLevel: len + 1,
@@ -50,8 +50,8 @@ const handleHover = (item: WorkflowNodeType, flag = 0) => {
 
 /** 删除节点 */
 const deleteBranchNode = (item: WorkflowNodeType) => {
-	if (nodeConfig.value?.conditionNode && nodeConfig.value?.conditionNode?.length > 2) {
-		nodeConfig.value.conditionNode = nodeConfig.value.conditionNode
+	if (nodeConfig.value?.branchs && nodeConfig.value?.branchs?.length > 2) {
+		nodeConfig.value.branchs = nodeConfig.value.branchs
 			.filter(condition => condition?.id !== item?.id)
 			.map((c, ind) => {
 				if (c) {
@@ -61,9 +61,9 @@ const deleteBranchNode = (item: WorkflowNodeType) => {
 				return c;
 			});
 	}
-	if (nodeConfig.value?.conditionNode?.length === 2) {
+	if (nodeConfig.value?.branchs?.length === 2) {
 		// 另一个条件节点
-		const retain = JSON.parse(JSON.stringify(nodeConfig.value?.conditionNode.find(c => c?.id !== item?.id)));
+		const retain = JSON.parse(JSON.stringify(nodeConfig.value?.branchs.find(c => c?.id !== item?.id)));
 		// 保存路由节点下面的子节点
 		let nodeConfigChildren: WorkflowNodeType = nodeConfig.value?.children
 			? JSON.parse(JSON.stringify(nodeConfig.value.children))
@@ -93,13 +93,13 @@ const deleteBranchNode = (item: WorkflowNodeType) => {
  * @param item 当前节点
  */
 const setPriorityLevel = (flag: number, item: WorkflowNodeType) => {
-	const index = nodeConfig.value?.conditionNode?.findIndex(c => c?.priorityLevel === item?.priorityLevel);
-	if (nodeConfig.value?.conditionNode && index !== undefined && index !== -1) {
-		const temp = nodeConfig.value.conditionNode[index];
+	const index = nodeConfig.value?.branchs?.findIndex(c => c?.priorityLevel === item?.priorityLevel);
+	if (nodeConfig.value?.branchs && index !== undefined && index !== -1) {
+		const temp = nodeConfig.value.branchs[index];
 		const idx = flag ? index + 1 : index - 1;
-		nodeConfig.value.conditionNode[index] = nodeConfig.value?.conditionNode[idx];
-		nodeConfig.value.conditionNode[idx] = temp;
-		nodeConfig.value.conditionNode.forEach((nd, index) => {
+		nodeConfig.value.branchs[index] = nodeConfig.value?.branchs[idx];
+		nodeConfig.value.branchs[idx] = temp;
+		nodeConfig.value.branchs.forEach((nd, index) => {
 			nd!.priorityLevel = index + 1;
 		});
 	}
@@ -114,15 +114,15 @@ const clickNode = (item: WorkflowNodeType) => {
 <template>
 	<div :class="['branch-node', nodeConfig?.error && 'branch-node-error']">
 		<div
-			v-for="(item, index) in nodeConfig?.conditionNode"
+			v-for="(item, index) in nodeConfig?.branchs"
 			:key="index"
 			:class="[
 				'branch-node-item',
 				index === 0 && 'start',
-				nodeConfig?.conditionNode && index === nodeConfig?.conditionNode?.length - 1 && 'end'
+				nodeConfig?.branchs && index === nodeConfig?.branchs?.length - 1 && 'end'
 			]"
 		>
-			<template v-if="index === 0 || (nodeConfig?.conditionNode && index === nodeConfig?.conditionNode?.length - 1)">
+			<template v-if="index === 0 || (nodeConfig?.branchs && index === nodeConfig?.branchs?.length - 1)">
 				<div
 					class="hide-line top-hide-line"
 					:style="{ left: index === 0 ? '-1px' : 'unset', right: index === 0 ? 'unset' : '-1px' }"
@@ -160,7 +160,7 @@ const clickNode = (item: WorkflowNodeType) => {
 								<el-icon class="icon"><ArrowLeft /></el-icon>
 							</div>
 							<div
-								v-if="nodeConfig?.conditionNode && index !== nodeConfig?.conditionNode?.length - 1"
+								v-if="nodeConfig?.branchs && index !== nodeConfig?.branchs?.length - 1"
 								class="right lv-btn"
 								@click.stop="setPriorityLevel(1, item)"
 							>
@@ -168,7 +168,7 @@ const clickNode = (item: WorkflowNodeType) => {
 							</div>
 						</template>
 					</div>
-					<AddNode v-if="item" v-model:node-children="item.children" :parent-id="item.id"></AddNode>
+					<AddNode v-if="item" v-model:node-children="item.children" :parent-node="item"></AddNode>
 				</div>
 				<NodeWrap v-if="item?.children" v-model="item.children" :parent-id="item.id"></NodeWrap>
 			</div>

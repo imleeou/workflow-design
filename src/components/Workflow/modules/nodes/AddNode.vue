@@ -40,18 +40,8 @@ const props = withDefaults(
 const addNode = (node: AddNodeType) => {
 	const defaultConfig: NodeType = JSON.parse(JSON.stringify(node.defaultConfig));
 	defaultConfig.id = getUniqueId(defaultConfig.type);
-	// 条件路由
-	if (defaultConfig.type === WorkflowNodeTypeEnum.Conditions) {
-		defaultConfig.conditionNode = defaultConfig.conditionNode?.map(item => {
-			return {
-				...item,
-				parentId: defaultConfig.id,
-				id: getUniqueId(WorkflowNodeTypeEnum.ConditionBranch)
-			} as NodeType;
-		});
-	}
-	// 并行路由
-	else if (defaultConfig.type === WorkflowNodeTypeEnum.Parallel) {
+	// 路由分支
+	if (defaultConfig.type === WorkflowNodeTypeEnum.Parallel || defaultConfig.type === WorkflowNodeTypeEnum.Conditions) {
 		defaultConfig.branchs = defaultConfig.branchs?.map(item => {
 			return {
 				...item,

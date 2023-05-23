@@ -126,7 +126,7 @@ const deleteBranchNode = (item: WorkflowNodeType) => {
 							<div class="pick">并行任务（同时进行）</div>
 						</div>
 					</div>
-					<AddNode v-if="item" v-model:node-children="item.children" :parent-id="item.id"></AddNode>
+					<AddNode v-if="item" v-model:node-children="item.children" :parent-node="item"></AddNode>
 				</div>
 				<NodeWrap v-if="item?.children" v-model="item.children" :parent-id="item.id"></NodeWrap>
 			</div>
