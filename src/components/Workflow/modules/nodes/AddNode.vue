@@ -3,6 +3,7 @@ import { Plus } from "@element-plus/icons-vue";
 import { WORKFLOW_ADD_NODE_TYPE_LIST, WorkflowNodeTypeEnum } from "../../constants";
 import { AddNodeType, NodeType, WorkflowNodeType } from "../../type";
 import { getUniqueId } from "../../utils";
+import { ref } from "vue";
 
 const props = withDefaults(
 		defineProps<{
@@ -35,10 +36,14 @@ const props = withDefaults(
 	),
 	emits = defineEmits<{
 		(e: "update:nodeChildren", nodeChildrenValue: WorkflowNodeType): void;
-	}>();
+	}>(),
+	/** 是否显示popover */
+	popoverVisible = ref(false);
 
 const addNode = (node: AddNodeType) => {
 	const defaultConfig: NodeType = JSON.parse(JSON.stringify(node.defaultConfig));
+	// 关闭popover
+	popoverVisible.value = false;
 	defaultConfig.id = getUniqueId(defaultConfig.type);
 	// 路由分支
 	if (defaultConfig.type === WorkflowNodeTypeEnum.Parallel || defaultConfig.type === WorkflowNodeTypeEnum.Conditions) {
@@ -60,7 +65,13 @@ const addNode = (node: AddNodeType) => {
 
 <template>
 	<div class="add-node">
-		<el-popover :placement="props.placement" width="400px" :trigger="props.trigger" :hide-after="props.hideAfter">
+		<el-popover
+			v-model:visible="popoverVisible"
+			:placement="props.placement"
+			width="400px"
+			:trigger="props.trigger"
+			:hide-after="props.hideAfter"
+		>
 			<template #reference>
 				<div class="add-button">
 					<el-icon><Plus /></el-icon>
