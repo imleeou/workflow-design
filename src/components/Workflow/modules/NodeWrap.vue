@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { NodeType } from "../type";
+import { NodeType, WorkflowNodeType } from "../type";
 import PersonNode from "./nodes/PersonNode.vue";
 import AddNode from "./nodes/AddNode.vue";
 import ConditionNode from "./nodes/ConditionNode.vue";
 import ParallelBranchNode from "./nodes/ParallelBranchNode.vue";
+import DrawerWrap from "./DrawerWrap.vue";
 import { WorkflowNodeTypeEnum } from "../constants";
 
 const props = defineProps<{
@@ -14,7 +15,15 @@ const props = defineProps<{
 		(e: "update:modelValue", modelValue: NodeType): void;
 	}>(),
 	/** 保存节点数据 */
-	nodeData = ref<NodeType>(props.modelValue);
+	nodeData = ref<NodeType>(props.modelValue),
+	drawerWrapShow = ref<boolean>(false),
+	/** 当前修改的节点信息 */
+	currentDrawerNode = ref<WorkflowNodeType>();
+
+const clickNode = (node: NodeType) => {
+	drawerWrapShow.value = true;
+	currentDrawerNode.value = node;
+};
 
 watch(
 	() => props.modelValue,
@@ -46,6 +55,7 @@ watch(
 				props.modelValue.type === WorkflowNodeTypeEnum.Copy
 			"
 			v-model="nodeData"
+			@click="clickNode(nodeData)"
 		></PersonNode>
 		<ConditionNode v-else-if="props.modelValue.type === WorkflowNodeTypeEnum.Conditions" v-model="nodeData"></ConditionNode>
 		<ParallelBranchNode
@@ -56,6 +66,8 @@ watch(
 	</div>
 	<!-- NodeWrap 递归渲染 -->
 	<NodeWrap v-if="nodeData?.children" v-model="nodeData.children"></NodeWrap>
+	<!-- 节点对应表单抽屉 -->
+	<DrawerWrap v-if="drawerWrapShow" v-model="drawerWrapShow" :node-config="currentDrawerNode"></DrawerWrap>
 </template>
 
 <style scoped lang="scss">

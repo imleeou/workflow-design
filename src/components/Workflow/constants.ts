@@ -1,5 +1,7 @@
 import { AddNodeType, NodeType } from "./type";
 
+/** 正则表达式，标识只能输入数字、字母、-、_ */
+export const WORKFLOW_ID_REG = /[^a-zA-Z0-9_-]+/g;
 /** 发起人类型枚举 */
 export enum WorkflowPersonEnum {
 	/** 人员 */
