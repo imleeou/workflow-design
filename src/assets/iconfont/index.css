@@ -1,42 +1,39 @@
 @font-face {
-  font-family: "wfIconfont"; /* Project id 4057808 */
-  src: url("//at.alicdn.com/t/c/font_4057808_zfjx4zdqq8b.woff2?t=1683618021554")
-      format("woff2"),
-    url("//at.alicdn.com/t/c/font_4057808_zfjx4zdqq8b.woff?t=1683618021554")
-      format("woff"),
-    url("//at.alicdn.com/t/c/font_4057808_zfjx4zdqq8b.ttf?t=1683618021554")
-      format("truetype");
+	font-family: "wfIconfont"; /* Project id 4057808 */
+	src: url("//at.alicdn.com/t/c/font_4057808_lkxs60hd56c.woff2?t=1684820941208") format("woff2"),
+		url("//at.alicdn.com/t/c/font_4057808_lkxs60hd56c.woff?t=1684820941208") format("woff"),
+		url("//at.alicdn.com/t/c/font_4057808_lkxs60hd56c.ttf?t=1684820941208") format("truetype");
 }
 
 .wf-iconfont {
-  font-family: wfIconfont !important;
-  font-size: 14px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: wfIconfont !important;
+	font-size: 14px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
 }
 /* 抄送人 */
 .icon-copy::before {
-  content: "\e71c";
+	content: "\e71c";
 }
 /* 发起人 */
 .icon-initiator::before {
-  content: "\e61c";
+	content: "\e61c";
 }
 /* 审批人 */
 .icon-approver::before {
-  content: "\e71e";
+	content: "\e71e";
 }
 /* 条件分支 */
 .icon-conditions::before {
-  content: "\e686";
+	content: "\e686";
 }
 /* 并行分支 */
 .icon-parallel::before {
-  content: "\e689";
+	content: "\e689";
 }
 /* 删除 */
 .icon-delete::before {
-  content: "\e785";
+	content: "\e785";
 }
