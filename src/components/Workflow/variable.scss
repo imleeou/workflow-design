@@ -12,6 +12,8 @@ $workflow-node-title-font-size: 12px;
 $workflow-node-header-height: 30px;
 /** 节点阴影 */
 $workflow-node-shadow: 0 0 3px 0 #1989fa;
+/** 通用阴影 */
+$workflow-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 /** add 按钮背景色 */
 $workflow-add-btn-bg: #1989fa;
 $workflow-add-btn-hover-bg: #469df5;
@@ -23,6 +25,8 @@ $workflow-node-radius: 5px;
 $workflow-condition-title-color: #15bca3;
 /** 并行分支头部标题颜色 */
 $workflow-parallel-title-color: #718dff;
+/** 灰色 */
+$workflow-gray-color: #8c8c8c;
 
 .node {
 	width: $workflow-node-width;
