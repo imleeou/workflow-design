@@ -49,9 +49,11 @@ init();
 
 <template>
 	<div class="workflow-container">
-		<NodeWrap v-if="workflowConfig" v-model="workflowConfig"></NodeWrap>
-		<div class="process-end">
-			<div class="button">流程结束</div>
+		<div class="container-scroll">
+			<NodeWrap v-if="workflowConfig" v-model="workflowConfig"></NodeWrap>
+			<div class="process-end">
+				<div class="button">流程结束</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -60,22 +62,29 @@ init();
 @import "./variable.scss";
 .workflow-container {
 	width: 100%;
-	padding: 50px 0;
+	height: 100%;
 	background-color: $workflow-bg;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	.process-end {
-		padding-bottom: 50px;
-		margin: 0 auto;
-		.button {
-			width: 100px;
-			padding: 5px 10px;
+	overflow: auto;
+	.container-scroll {
+		padding: 50px 0;
+		flex-grow: 1;
+		height: auto;
+		transition: all 0.3s ease-in-out;
+		transform-origin: 50% 0 0;
+		box-sizing: border-box;
+		.process-end {
+			padding-bottom: 50px;
 			margin: 0 auto;
-			text-align: center;
-			background-color: #ffffff;
-			border-radius: 20px;
-			box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+			.button {
+				width: 100px;
+				padding: 5px 10px;
+				margin: 0 auto;
+				text-align: center;
+				background-color: #ffffff;
+				border-radius: 20px;
+				box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+			}
 		}
 	}
 }
