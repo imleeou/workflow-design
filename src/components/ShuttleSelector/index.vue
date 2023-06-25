@@ -18,7 +18,8 @@ const dialogTableVisible = ref(props.modelValue),
 	orgData = ref<PersonInfoType[]>([]),
 	// 待选项
 	pendingOption = ref<PersonInfoType[]>([]),
-	queryKey = ref("");
+	queryKey = ref(""),
+	checkList = ref([]);
 
 const title = computed(() => {
 	return props.type ? WorkflowPersonMap[props.type] : "选择部门或人员";
@@ -49,9 +50,24 @@ watch(
 		<div class="dialog-body">
 			<div class="list">
 				<el-input v-model="queryKey" placeholder="输入名称关键词" :suffix-icon="Search" />
-				<ul class="options">
-					<li v-for="item in pendingOption" :key="item.id" class="option">{{ item.name }}</li>
-				</ul>
+				<div class="options">
+					<el-checkbox-group v-model="checkList">
+						<div v-for="item in pendingOption" :key="item.id" class="option">
+							<el-checkbox :label="item.id" class="checkbox">
+								<div class="label-content">
+									<i
+										:class="[
+											'wf-iconfont',
+											item.type === WorkflowPersonTypeEnum.Department ? 'icon-conditions' : 'icon-initiator'
+										]"
+									></i>
+									<span>{{ item.name }}</span>
+								</div>
+							</el-checkbox>
+							<span v-if="item.type === WorkflowPersonTypeEnum.Department" class="next" @click.stop>下级</span>
+						</div>
+					</el-checkbox-group>
+				</div>
 			</div>
 			<div class="selected"></div>
 		</div>
@@ -74,12 +90,33 @@ watch(
 	}
 	.list {
 		.options {
-			list-style: none;
 			.option {
+				width: 100%;
 				padding: 5px 10px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				&:hover {
 					background-color: #f5f5f5;
 					cursor: pointer;
+				}
+				.checkbox {
+					flex-grow: 1;
+					.label-content {
+						span {
+							margin-left: 5px;
+						}
+					}
+				}
+				.next {
+					flex-shrink: 0;
+					display: block;
+					font-size: 14px;
+					user-select: none;
+
+					&:hover {
+						color: #409eff;
+					}
 				}
 			}
 		}
