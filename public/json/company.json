@@ -1,0 +1,144 @@
+[
+	{
+		"id": 1,
+		"name": "技术部",
+		"type": "department",
+		"parentId": null,
+		"children": [
+			{
+				"id": 11,
+				"name": "研发部",
+				"type": "department",
+				"parentId": 1,
+				"children": [
+					{
+						"id": 111,
+						"name": "王小明",
+						"type": "user",
+						"parentId": 11
+					},
+					{
+						"id": 112,
+						"name": "李莉",
+						"type": "user",
+						"parentId": 11
+					}
+				]
+			},
+			{
+				"id": 12,
+				"name": "测试部",
+				"type": "department",
+				"parentId": 1,
+				"children": [
+					{
+						"id": 121,
+						"name": "张三",
+						"type": "user",
+						"parentId": 12
+					},
+					{
+						"id": 122,
+						"name": "李四",
+						"type": "user",
+						"parentId": 12
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": 2,
+		"name": "市场部",
+		"type": "department",
+		"parentId": null,
+		"children": [
+			{
+				"id": 21,
+				"name": "销售部",
+				"type": "department",
+				"parentId": 2,
+				"children": [
+					{
+						"id": 211,
+						"name": "王五",
+						"type": "user",
+						"parentId": 21
+					},
+					{
+						"id": 212,
+						"name": "赵六",
+						"type": "user",
+						"parentId": 21
+					}
+				]
+			},
+			{
+				"id": 22,
+				"name": "市场推广部",
+				"type": "department",
+				"parentId": 2,
+				"children": [
+					{
+						"id": 221,
+						"name": "刘七",
+						"type": "user",
+						"parentId": 22
+					},
+					{
+						"id": 222,
+						"name": "陈八",
+						"type": "user",
+						"parentId": 22
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": 3,
+		"name": "财务部",
+		"type": "department",
+		"parentId": null,
+		"children": [
+			{
+				"id": 31,
+				"name": "财神",
+				"type": "user",
+				"parentId": 3
+			},
+			{
+				"id": 32,
+				"name": "招财猫",
+				"type": "user",
+				"parentId": 3
+			}
+		]
+	},
+	{
+		"id": 4,
+		"name": "人力资源部",
+		"type": "department",
+		"parentId": null,
+		"children": [
+			{
+				"id": 41,
+				"name": "蔡园德",
+				"type": "user",
+				"parentId": 4
+			},
+			{
+				"id": 42,
+				"name": "权退休",
+				"type": "user",
+				"parentId": 4
+			},
+			{
+				"id": 43,
+				"name": "梅补偿",
+				"type": "user",
+				"parentId": 4
+			}
+		]
+	}
+]

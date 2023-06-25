@@ -36,9 +36,9 @@ const props = withDefaults(
 	),
 	emits = defineEmits<{
 		(e: "update:nodeChildren", nodeChildrenValue: WorkflowNodeType): void;
-	}>(),
+	}>();
 	/** 是否显示popover */
-	popoverVisible = ref(false);
+	const popoverVisible = ref(false);
 
 const addNode = (node: AddNodeType) => {
 	const defaultConfig: NodeType = JSON.parse(JSON.stringify(node.defaultConfig));

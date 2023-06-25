@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { WorkflowNodeType } from "../../types";
+import ShuttleSelector from "@/components/ShuttleSelector/index.vue";
 interface Props {
 	nodeConfig: WorkflowNodeType;
 }
@@ -9,11 +10,12 @@ const props = defineProps<Props>(),
 	emits = defineEmits<{
 		(e: "configChange", nodeConfig: WorkflowNodeType): void;
 	}>();
-const selected = ref<any[]>([]);
+const selected = ref<any[]>([]),
+	selectorVisible = ref(false);
 
 /** 选择人员 */
 const select = () => {
-	console.log("选择人员");
+	selectorVisible.value = true;
 };
 
 /** 删除人员或部门 */
@@ -35,6 +37,7 @@ if (props.nodeConfig) {
 			<el-tag v-for="u in selected" :key="u.id" class="user-tag" closable @close="deleteSelect(u)">{{ u.name }}</el-tag>
 		</div>
 	</div>
+	<ShuttleSelector v-model="selectorVisible"></ShuttleSelector>
 </template>
 
 <style scoped lang="scss">

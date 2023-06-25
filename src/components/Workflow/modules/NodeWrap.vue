@@ -13,9 +13,9 @@ const props = defineProps<{
 	}>(),
 	emits = defineEmits<{
 		(e: "update:modelValue", modelValue: NodeType): void;
-	}>(),
+	}>();
 	/** 保存节点数据 */
-	nodeData = ref<NodeType>(props.modelValue),
+	const nodeData = ref<NodeType>(props.modelValue),
 	drawerWrapShow = ref<boolean>(false),
 	/** 当前修改的节点信息 */
 	currentDrawerNode = ref<WorkflowNodeType>();
