@@ -145,6 +145,15 @@ const clearChecked = () => {
 	checkIds.value = [];
 };
 
+/** 判断当前选项禁用状态 */
+const disabledCheckBox = (item: PersonInfoType) => {
+	return (
+		(props.type === WorkflowPersonTypeEnum.Department && item.type !== WorkflowPersonTypeEnum.Department) ||
+		(props.type === WorkflowPersonTypeEnum.Person && item.type !== WorkflowPersonTypeEnum.Person) ||
+		(props.type === WorkflowPersonTypeEnum.Role && item.type !== WorkflowPersonTypeEnum.Role)
+	);
+};
+
 watch(
 	() => props.modelValue,
 	(nv: boolean) => {
@@ -178,7 +187,7 @@ watch(
 				<div class="options">
 					<el-checkbox-group v-if="pendingOption.length" v-model="checkIds">
 						<div v-for="item in pendingOption" :key="item.id" class="option">
-							<el-checkbox :label="item.id" class="checkbox">
+							<el-checkbox :label="item.id" class="checkbox" :disabled="disabledCheckBox(item)">
 								<div class="label-content">
 									<i
 										:class="[
