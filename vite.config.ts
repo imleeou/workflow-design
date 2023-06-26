@@ -4,18 +4,21 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
-  },
-  plugins: [
-    vue(),
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
-  ],
+	resolve: {
+		alias: {
+			"@": "/src"
+		}
+	},
+	plugins: [
+		vue(),
+		AutoImport({
+			resolvers: [ElementPlusResolver()]
+		}),
+		Components({
+			resolvers: [ElementPlusResolver()]
+		})
+	],
+	server: {
+		port: 9001
+	}
 });
