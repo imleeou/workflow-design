@@ -140,5 +140,12 @@
 				"parentId": 4
 			}
 		]
+	},
+	{
+		"id": 5,
+		"name": "行政部",
+		"type": "department",
+		"parentId": null,
+		"children": []
 	}
 ]
