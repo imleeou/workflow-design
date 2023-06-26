@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { WorkflowPersonMap, WorkflowPersonTypeEnum } from "./constants";
+import { DEFAULT_BREADCRUMB, WorkflowPersonMap, WorkflowPersonTypeEnum } from "./constants";
 import { PersonInfoType } from "./types";
-import { Search } from "@element-plus/icons-vue";
+import { Search, Close } from "@element-plus/icons-vue";
 
 const props = defineProps<{
 		modelValue: boolean;
 		/** 选择类型 */
 		type?: WorkflowPersonTypeEnum;
+		/** 初始选中值 */
+		defaultIds?: number[];
 	}>(),
 	emits = defineEmits<{
 		(e: "update:modelValue", value: boolean): void;
+		(e: "confirm", checkList: PersonInfoType[]): void;
 	}>();
 const dialogTableVisible = ref(props.modelValue),
 	/** 组织架构数据 */
@@ -19,22 +22,31 @@ const dialogTableVisible = ref(props.modelValue),
 	/** 待选项数据 */
 	pendingOption = ref<PersonInfoType[]>([]),
 	queryKey = ref(""),
-	checkList = ref([]),
+	checkIds = ref<number[]>([...(props.defaultIds ?? [])]),
 	/** 存放层级面包屑 */
 	breadcrumb = ref<
 		{
 			text: string;
 			id: number;
 		}[]
-	>([
-		{
-			text: "全部",
-			id: 0
-		}
-	]);
+	>([...DEFAULT_BREADCRUMB]);
 
 const title = computed(() => {
 	return props.type ? WorkflowPersonMap[props.type] : "选择部门或人员";
+});
+
+const flatData = computed(() => {
+	return flatOrgData(orgData.value);
+});
+
+/** 选中项数据 */
+const checkList = computed(() => {
+	return flatData.value.filter(item => checkIds.value.includes(item.id));
+});
+
+/** 全选按钮中间状态 */
+const isIndeterminate = computed(() => {
+	return checkIds.value.length > 0 && checkIds.value.length < flatData.value.length;
 });
 
 /** 递归扁平化orgData */
@@ -90,12 +102,47 @@ const setPendingOption = (id: number) => {
 	if (id === 0) {
 		pendingOption.value = orgData.value;
 	} else {
-		const data = flatOrgData(orgData.value);
-		const item = data.find(item => item.id === id);
-		if (item) {
-			pendingOption.value = item.children || [];
-		}
+		const item = flatData.value.find(item => item.id === id);
+		pendingOption.value = item && item.children ? item.children : [];
 	}
+};
+
+/** 点击确认 */
+const confirm = () => {
+	emits("update:modelValue", false);
+	emits("confirm", checkList.value);
+};
+
+/** 点击取消 */
+const cancel = () => {
+	emits("update:modelValue", false);
+};
+
+/** 输入框筛选 */
+const queryInput = (value: string) => {
+	breadcrumb.value = [...DEFAULT_BREADCRUMB];
+	if (!value) {
+		pendingOption.value = orgData.value;
+	} else {
+		const result = flatData.value.filter(item => item.name.includes(value));
+		pendingOption.value = result;
+	}
+};
+
+/** 全选 */
+const selectAll = (value: boolean) => {
+	// 取消全选
+	checkIds.value = value ? flatData.value.map(item => item.id) : [];
+};
+
+/** 删除选择项 */
+const deleteSelected = (item: PersonInfoType) => {
+	checkIds.value = checkIds.value.filter(id => id !== item.id);
+};
+
+/** 清空选中 */
+const clearChecked = () => {
+	checkIds.value = [];
 };
 
 watch(
@@ -110,7 +157,14 @@ watch(
 	<el-dialog v-model="dialogTableVisible" :title="title" width="840" @close="close">
 		<div class="dialog-body">
 			<div class="list">
-				<el-input v-model="queryKey" class="query-input" placeholder="输入名称关键词" :suffix-icon="Search" />
+				<el-input
+					v-model="queryKey"
+					class="query-input"
+					placeholder="输入名称关键词"
+					clearable
+					:suffix-icon="Search"
+					@input="queryInput"
+				/>
 				<div class="breadcrumb">
 					<template v-for="(crumb, index) in breadcrumb" :key="index">
 						<span class="text" @click="handleCrumb(crumb)">{{ crumb.text }}</span>
@@ -118,11 +172,11 @@ watch(
 					</template>
 				</div>
 				<div class="tools">
-					<el-checkbox>全选</el-checkbox>
+					<el-checkbox :disabled="!pendingOption?.length" :indeterminate="isIndeterminate" @change="selectAll">全选</el-checkbox>
 					<span v-if="breadcrumb?.length > 1" class="superiors" @click="returnSuperior">返回上级</span>
 				</div>
 				<div class="options">
-					<el-checkbox-group v-model="checkList">
+					<el-checkbox-group v-if="pendingOption.length" v-model="checkIds">
 						<div v-for="item in pendingOption" :key="item.id" class="option">
 							<el-checkbox :label="item.id" class="checkbox">
 								<div class="label-content">
@@ -143,10 +197,34 @@ watch(
 							>
 						</div>
 					</el-checkbox-group>
+					<el-empty v-else description="暂无数据" />
 				</div>
 			</div>
-			<div class="selected"></div>
+			<div class="selected">
+				<div class="selected-tool">
+					<span>已选择：{{ checkIds.length }}</span>
+					<span class="clear" @click="clearChecked">清空</span>
+				</div>
+				<ul class="checked-list">
+					<li v-for="(item, index) in checkList" :key="index" class="checked">
+						<div class="label">
+							<i
+								:class="['wf-iconfont', item.type === WorkflowPersonTypeEnum.Department ? 'icon-conditions' : 'icon-initiator']"
+							></i>
+							<span>{{ item.name }}</span>
+						</div>
+						<el-icon class="close-icon" @click="deleteSelected(item)"><Close /></el-icon>
+					</li>
+				</ul>
+			</div>
 		</div>
+
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button @click="cancel"> 取消 </el-button>
+				<el-button type="primary" @click="confirm"> 确认 </el-button>
+			</span>
+		</template>
 	</el-dialog>
 </template>
 
@@ -223,6 +301,51 @@ watch(
 	}
 	.selected {
 		border-left: 1px solid #ccc;
+		padding: 0 10px;
+
+		.selected-tool {
+			display: flex;
+			justify-content: space-between;
+			padding: 20px 0;
+			.clear {
+				color: #409eff;
+				cursor: pointer;
+				user-select: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.checked-list {
+			width: 100%;
+			list-style: none;
+			.checked {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 5px 0;
+				&:hover {
+					background-color: #f5f5f5;
+					cursor: pointer;
+				}
+				.label {
+					display: flex;
+					align-items: center;
+					span {
+						margin-left: 5px;
+					}
+				}
+				.close-icon {
+					cursor: pointer;
+					&:hover {
+						font-weight: bold;
+						transition: all 0.3s;
+						transform: scale(1.2);
+					}
+				}
+			}
+		}
 	}
 }
 </style>

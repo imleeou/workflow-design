@@ -13,4 +13,12 @@ export const WorkflowPersonMap = {
 	[WorkflowPersonTypeEnum.Person]: "选择人员",
 	[WorkflowPersonTypeEnum.Department]: "选择部门",
 	[WorkflowPersonTypeEnum.Role]: "选择角色"
-}
+};
+
+/** 默认面包屑数据 */
+export const DEFAULT_BREADCRUMB = [
+	{
+		text: "全部",
+		id: 0
+	}
+];
