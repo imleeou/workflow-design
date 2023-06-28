@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { DEFAULT_BREADCRUMB, WorkflowPersonMap, WorkflowPersonTypeEnum } from "./constants";
-import { PersonInfoType } from "./types";
+import { DEFAULT_BREADCRUMB, WorkflowPersonMap } from "./constants";
+import { PersonType } from "@/components/Workflow/types";
 import { Search, Close } from "@element-plus/icons-vue";
 import { CheckboxValueType } from "element-plus";
+import { WorkflowPersonEnum } from "../Workflow/constants";
 
 const props = defineProps<{
 		modelValue: boolean;
 		/** 选择类型 */
-		type?: WorkflowPersonTypeEnum;
+		type?: WorkflowPersonEnum;
 		/** 初始选中值 */
 		defaultIds?: number[];
 	}>(),
 	emits = defineEmits<{
 		(e: "update:modelValue", value: boolean): void;
-		(e: "confirm", checkList: PersonInfoType[]): void;
+		(e: "confirm", checkList: PersonType[]): void;
 	}>();
 const dialogTableVisible = ref(props.modelValue),
 	/** 组织架构数据 */
-	orgData = ref<PersonInfoType[]>([]),
+	orgData = ref<PersonType[]>([]),
 	/** 待选项数据 */
-	pendingOption = ref<PersonInfoType[]>([]),
+	pendingOption = ref<PersonType[]>([]),
 	queryKey = ref(""),
 	checkIds = ref<number[]>([...(props.defaultIds ?? [])]),
 	/** 存放层级面包屑 */
@@ -51,14 +52,14 @@ const isIndeterminate = computed(() => {
 });
 
 /** 递归扁平化orgData */
-const flatOrgData = (data: PersonInfoType[]): PersonInfoType[] => {
+const flatOrgData = (data: PersonType[]): PersonType[] => {
 	return data.reduce((prev, cur) => {
 		if (cur.children && cur.children.length) {
 			return [...prev, cur, ...flatOrgData(cur.children)];
 		} else {
 			return [...prev, cur];
 		}
-	}, [] as PersonInfoType[]);
+	}, [] as PersonType[]);
 };
 
 const close = () => {
@@ -76,7 +77,7 @@ const getCompanyOrg = async () => {
 getCompanyOrg();
 
 /** 点击下级 */
-const junior = (item: PersonInfoType) => {
+const junior = (item: PersonType) => {
 	const { children } = item;
 	breadcrumb.value.push({ text: item.name, id: item.id });
 	if (children && children.length) {
@@ -139,7 +140,7 @@ const selectAll = (value: CheckboxValueType) => {
 };
 
 /** 删除选择项 */
-const deleteSelected = (item: PersonInfoType) => {
+const deleteSelected = (item: PersonType) => {
 	checkIds.value = checkIds.value.filter(id => id !== item.id);
 };
 
@@ -149,11 +150,11 @@ const clearChecked = () => {
 };
 
 /** 判断当前选项禁用状态 */
-const disabledCheckBox = (item: PersonInfoType) => {
+const disabledCheckBox = (item: PersonType) => {
 	return (
-		(props.type === WorkflowPersonTypeEnum.Department && item.type !== WorkflowPersonTypeEnum.Department) ||
-		(props.type === WorkflowPersonTypeEnum.Person && item.type !== WorkflowPersonTypeEnum.Person) ||
-		(props.type === WorkflowPersonTypeEnum.Role && item.type !== WorkflowPersonTypeEnum.Role)
+		(props.type === WorkflowPersonEnum.Department && item.type !== WorkflowPersonEnum.Department) ||
+		(props.type === WorkflowPersonEnum.Person && item.type !== WorkflowPersonEnum.Person) ||
+		(props.type === WorkflowPersonEnum.Role && item.type !== WorkflowPersonEnum.Role)
 	);
 };
 
@@ -197,16 +198,13 @@ defineExpose({
 							<el-checkbox :label="item.id" class="checkbox" :disabled="disabledCheckBox(item)">
 								<div class="label-content">
 									<i
-										:class="[
-											'wf-iconfont',
-											item.type === WorkflowPersonTypeEnum.Department ? 'icon-conditions' : 'icon-initiator'
-										]"
+										:class="['wf-iconfont', item.type === WorkflowPersonEnum.Department ? 'icon-conditions' : 'icon-initiator']"
 									></i>
 									<span>{{ item.name }}</span>
 								</div>
 							</el-checkbox>
 							<span
-								v-if="item.type === WorkflowPersonTypeEnum.Department && item.children && item.children.length"
+								v-if="item.type === WorkflowPersonEnum.Department && item.children && item.children.length"
 								class="next"
 								@click.stop="junior(item)"
 								>下级</span
@@ -224,9 +222,7 @@ defineExpose({
 				<ul class="checked-list">
 					<li v-for="(item, index) in checkList" :key="index" class="checked">
 						<div class="label">
-							<i
-								:class="['wf-iconfont', item.type === WorkflowPersonTypeEnum.Department ? 'icon-conditions' : 'icon-initiator']"
-							></i>
+							<i :class="['wf-iconfont', item.type === WorkflowPersonEnum.Department ? 'icon-conditions' : 'icon-initiator']"></i>
 							<span>{{ item.name }}</span>
 						</div>
 						<el-icon class="close-icon" @click="deleteSelected(item)"><Close /></el-icon>

@@ -52,7 +52,23 @@ const currentNodeRender = computed(() => {
 			/></el-icon>
 		</div>
 		<div class="node-content">
-			<div class="pick">{{ currentNodeRender.placeholder }}</div>
+			<div class="pick">
+				<p v-if="props.modelValue.nodePerson?.length">
+					<template v-for="(person, index) in props.modelValue.nodePerson" :key="index">
+						<span>{{ person.name }}</span>
+						<span
+							v-if="
+								props.modelValue &&
+								props.modelValue.nodePerson &&
+								props.modelValue.nodePerson.length > 1 &&
+								index !== props.modelValue.nodePerson.length - 1
+							"
+							>、</span
+						>
+					</template>
+				</p>
+				<p v-else>{{ currentNodeRender.placeholder }}</p>
+			</div>
 			<el-icon class="arrow-right"><ArrowRight /></el-icon>
 		</div>
 	</div>

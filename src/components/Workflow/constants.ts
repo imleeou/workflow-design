@@ -5,15 +5,18 @@ export const WORKFLOW_ID_REG = /[^a-zA-Z0-9_-]+/g;
 /** 发起人类型枚举 */
 export enum WorkflowPersonEnum {
 	/** 人员 */
-	Person = 1,
+	Person = "user",
 	/** 部门 */
-	Department = 2
+	Department = "department",
+	/** 角色 */
+	Role = "role"
 }
 
 /** 发起人类型映射 */
 export const WorkflowPersonMap = {
 	[WorkflowPersonEnum.Person]: "人员",
-	[WorkflowPersonEnum.Department]: "部门"
+	[WorkflowPersonEnum.Department]: "部门",
+	[WorkflowPersonEnum.Role]: "角色"
 };
 
 /** 节点类型枚举 */

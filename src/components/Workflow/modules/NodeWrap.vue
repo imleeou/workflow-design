@@ -14,8 +14,8 @@ const props = defineProps<{
 	emits = defineEmits<{
 		(e: "update:modelValue", modelValue: NodeType): void;
 	}>();
-	/** 保存节点数据 */
-	const nodeData = ref<NodeType>(props.modelValue),
+/** 保存节点数据 */
+const nodeData = ref<NodeType>(props.modelValue),
 	drawerWrapShow = ref<boolean>(false),
 	/** 当前修改的节点信息 */
 	currentDrawerNode = ref<WorkflowNodeType>();
@@ -23,6 +23,13 @@ const props = defineProps<{
 const clickNode = (node: NodeType) => {
 	drawerWrapShow.value = true;
 	currentDrawerNode.value = node;
+};
+
+/** 抽屉数据更改 */
+const drawerChange = (cfg: WorkflowNodeType) => {
+	if (cfg) {
+		nodeData.value = cfg;
+	}
 };
 
 watch(
@@ -67,7 +74,12 @@ watch(
 	<!-- NodeWrap 递归渲染 -->
 	<NodeWrap v-if="nodeData?.children" v-model="nodeData.children"></NodeWrap>
 	<!-- 节点对应表单抽屉 -->
-	<DrawerWrap v-if="drawerWrapShow" v-model="drawerWrapShow" :node-config="currentDrawerNode"></DrawerWrap>
+	<DrawerWrap
+		v-if="drawerWrapShow"
+		v-model="drawerWrapShow"
+		:node-config="currentDrawerNode"
+		@data-change="drawerChange"
+	></DrawerWrap>
 </template>
 
 <style scoped lang="scss">

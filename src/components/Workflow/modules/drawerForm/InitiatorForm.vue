@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { WorkflowNodeType } from "../../types";
+import { PersonType, WorkflowNodeType } from "../../types";
 import ShuttleSelector from "@/components/ShuttleSelector/index.vue";
 interface Props {
 	nodeConfig: WorkflowNodeType;
@@ -10,8 +10,9 @@ const props = defineProps<Props>(),
 	emits = defineEmits<{
 		(e: "configChange", nodeConfig: WorkflowNodeType): void;
 	}>();
-const selected = ref<any[]>([]),
-	selectorVisible = ref(false);
+const selected = ref<PersonType[]>(props.nodeConfig?.nodePerson || []),
+	selectorVisible = ref(false),
+	shuttleSelectorRef = ref<InstanceType<typeof ShuttleSelector>>();
 
 /** 选择人员 */
 const select = () => {
@@ -19,13 +20,25 @@ const select = () => {
 };
 
 /** 删除人员或部门 */
-const deleteSelect = (u: any) => {
-	console.log("deleteSelect", u);
+const deleteSelect = (u: PersonType) => {
+	selected.value = selected.value.filter(item => item.id !== u.id);
+	shuttleSelectorRef.value?.deleteSelected(u);
+	setData(selected.value.map(item => ({ id: item.id, name: item.name, type: item.type } as PersonType)));
 };
 
-if (props.nodeConfig) {
-	emits("configChange", props.nodeConfig);
-}
+/** 设置数据 */
+const setData = (users: PersonType[]) => {
+	emits("configChange", {
+		...props.nodeConfig,
+		nodePerson: [...users]
+	} as WorkflowNodeType);
+};
+
+/** 选择人员确认 */
+const selectorConfirm = (checkList: PersonType[]) => {
+	selected.value = checkList;
+	setData(checkList.map(item => ({ id: item.id, name: item.name, type: item.type } as PersonType)));
+};
 </script>
 
 <template>
@@ -37,7 +50,7 @@ if (props.nodeConfig) {
 			<el-tag v-for="u in selected" :key="u.id" class="user-tag" closable @close="deleteSelect(u)">{{ u.name }}</el-tag>
 		</div>
 	</div>
-	<ShuttleSelector v-model="selectorVisible"></ShuttleSelector>
+	<ShuttleSelector ref="shuttleSelectorRef" v-model="selectorVisible" @confirm="selectorConfirm"></ShuttleSelector>
 </template>
 
 <style scoped lang="scss">

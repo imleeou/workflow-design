@@ -96,6 +96,7 @@ const componentId = computed(() => {
 
 /** 抽屉数据更改 */
 const configChange = (val: WorkflowNodeType) => {
+	console.log("configChange--->", val);
 	saveDrawerData.value = val;
 };
 

@@ -1,4 +1,4 @@
-import { WorkflowPersonMap, WorkflowNodeTypeMap, WorkflowNodeTypeEnum } from "./constants";
+import { WorkflowNodeTypeMap, WorkflowNodeTypeEnum, WorkflowPersonEnum } from "./constants";
 
 /** 审批流数据类型 */
 export type WorkflowNodeType = NodeType | undefined | null;
@@ -10,7 +10,11 @@ export interface PersonType {
 	/** 人员名称 */
 	name: string;
 	/** 人员类型 */
-	type: keyof typeof WorkflowPersonMap;
+	type: WorkflowPersonEnum;
+	/** 父节点id */
+	parentId?: number;
+	/** 子节点 */
+	children?: PersonType[];
 }
 
 /** 普通节点类型 */
