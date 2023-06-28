@@ -4,6 +4,7 @@ import axios from "axios";
 import { DEFAULT_BREADCRUMB, WorkflowPersonMap, WorkflowPersonTypeEnum } from "./constants";
 import { PersonInfoType } from "./types";
 import { Search, Close } from "@element-plus/icons-vue";
+import { CheckboxValueType } from "element-plus";
 
 const props = defineProps<{
 		modelValue: boolean;
@@ -61,6 +62,8 @@ const flatOrgData = (data: PersonInfoType[]): PersonInfoType[] => {
 };
 
 const close = () => {
+	pendingOption.value = [...orgData.value];
+	breadcrumb.value = [...DEFAULT_BREADCRUMB];
 	emits("update:modelValue", false);
 };
 
@@ -130,7 +133,7 @@ const queryInput = (value: string) => {
 };
 
 /** 全选 */
-const selectAll = (value: boolean) => {
+const selectAll = (value: CheckboxValueType) => {
 	// 取消全选
 	checkIds.value = value ? flatData.value.map(item => item.id) : [];
 };
@@ -160,6 +163,10 @@ watch(
 		dialogTableVisible.value = nv;
 	}
 );
+
+defineExpose({
+	deleteSelected
+});
 </script>
 
 <template>
