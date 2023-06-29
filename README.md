@@ -1,5 +1,9 @@
 # 仿钉钉风格审批流设计器
 
+## 👁 预览地址
+
+[☞ 在线预览](http://workflow.leeou.cc)
+
 ## 🛠️ 技术栈
 
 VUE3 + typescript + element-plus + vite
