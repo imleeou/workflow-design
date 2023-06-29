@@ -166,7 +166,8 @@ watch(
 );
 
 defineExpose({
-	deleteSelected
+	deleteSelected,
+	clearChecked
 });
 </script>
 
