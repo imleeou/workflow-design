@@ -54,7 +54,7 @@ export const INITIATOR_NODE_INFO: NodeType = {
 	type: WorkflowNodeTypeEnum.Initiator,
 	id: "INITIATOR-ROOT",
 	children: undefined,
-	parentId: ""
+	parentId: undefined
 };
 
 /** 人员节点渲染信息 */

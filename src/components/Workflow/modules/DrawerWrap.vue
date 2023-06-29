@@ -3,6 +3,9 @@ import { computed, ref, useAttrs, watch } from "vue";
 import { WorkflowNodeType } from "../types";
 import { WorkflowNodeTypeEnum, WORKFLOW_ID_REG } from "../constants";
 import InitiatorForm from "./drawerForm/InitiatorForm.vue";
+import ApproverForm from "./drawerForm/ApproverForm.vue";
+import CcForm from "./drawerForm/CcForm.vue";
+import ConditionsForm from "./drawerForm/ConditionsForm.vue";
 
 // 支持透传属性，详细属性参考ELDrawer的属性：https://element-plus.org/zh-CN/component/drawer.html#drawer-attributes
 interface Props {
@@ -86,7 +89,10 @@ const confirm = async () => {
 const componentId = computed(() => {
 	/** 节点类型对应的Form表单 */
 	const NODE_FORM_ENUM = {
-		[WorkflowNodeTypeEnum.Initiator]: InitiatorForm
+		[WorkflowNodeTypeEnum.Initiator]: InitiatorForm,
+		[WorkflowNodeTypeEnum.Approver]: ApproverForm,
+		[WorkflowNodeTypeEnum.Copy]: CcForm,
+		[WorkflowNodeTypeEnum.ConditionBranch]: ConditionsForm
 	};
 
 	return props.nodeConfig?.type && Object.keys(NODE_FORM_ENUM).includes(props.nodeConfig?.type.toString())
