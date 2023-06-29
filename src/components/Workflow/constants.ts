@@ -1,4 +1,4 @@
-import { AddNodeType, NodeType } from "./types";
+import { AddNodeType, NodeType, WorkflowApproveRadioType } from "./types";
 
 /** 正则表达式，标识只能输入数字、字母、-、_ */
 export const WORKFLOW_ID_REG = /[^a-zA-Z0-9_-]+/g;
@@ -157,5 +157,58 @@ export const WORKFLOW_ADD_NODE_TYPE_LIST: AddNodeType[] = [
 			],
 			children: undefined
 		}
+	}
+];
+
+/** 审批节点，选择审批人类型单选框 */
+export const WORKFLOW_APPROVER_RADIO_MAP: WorkflowApproveRadioType[] = [
+	{
+		text: "指定用户",
+		label: "user",
+		select: WorkflowPersonEnum.Person
+	},
+	{
+		text: "指定角色",
+		label: "role",
+		select: WorkflowPersonEnum.Role
+	},
+	{
+		text: "指定部门",
+		label: "org",
+		select: WorkflowPersonEnum.Department
+	},
+	{
+		text: "发起人",
+		label: "initiator"
+	},
+	{
+		text: "部门助理",
+		label: "orgAssistant"
+	},
+	{
+		text: "部门主管",
+		label: "orgDirector"
+	},
+	{
+		text: "上级部门助理",
+		label: "parentOrgAssistant"
+	},
+	{
+		text: "上级部门主管",
+		label: "parentOrgDirector"
+	},
+	{
+		text: "指定部门助理",
+		label: "specifyOrgAssistant",
+		select: WorkflowPersonEnum.Department
+	},
+	{
+		text: "指定部门主管",
+		label: "specifyOrgDirector",
+		select: WorkflowPersonEnum.Department
+	},
+	{
+		text: "提交人自选",
+		label: "optional"
 	}
 ];

@@ -68,5 +68,21 @@ export interface AddNodeType {
 }
 
 export interface NodeConfigType {
+	/** 自动审批 */
+	autoApprove?: boolean;
+	/** 直接结束 */
+	directEnd?: boolean;
+	/** 审批人类型 */
+	assignType?: string;
 	[x: string]: any;
+}
+
+/** 审批节点，选择审批人类型单选框类型 */
+export interface WorkflowApproveRadioType {
+	/** 选项名称 */
+	text: string;
+	/** 选项值 */
+	label: string;
+	/** 指定选择类型 */
+	select?: WorkflowPersonEnum;
 }

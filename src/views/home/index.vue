@@ -7,7 +7,7 @@ import Workflow from "@/components/Workflow/index.vue";
 const workflowData = ref<WorkflowNodeType>();
 
 const save = () => {
-	console.log("保存");
+	console.log("保存", workflowData.value);
 };
 </script>
 
