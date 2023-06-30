@@ -14,3 +14,7 @@ export const DEFAULT_BREADCRUMB = [
 		id: 0
 	}
 ];
+/** 组织架构api url */
+export const ORG_API_URL = "/json/company.json";
+/** 角色api url */
+export const ROLE_API_URL = "/json/role.json";

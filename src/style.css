@@ -12,8 +12,8 @@ body {
 
 /* scroll bar */
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 4px;
+	height: 4px;
 	background-color: white;
 }
 ::-webkit-scrollbar-thumb {

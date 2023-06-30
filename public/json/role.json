@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "全局管理员",
+    "type": "role"
+  },
+  {
+    "id": 2,
+    "name": "设备管理员",
+    "type": "role"
+  },
+  {
+    "id": 3,
+    "name": "后勤人员",
+    "type": "role"
+  },
+  {
+    "id": 4,
+    "name": "人事人员",
+    "type": "role"
+  },
+  {
+    "id": 5,
+    "name": "财务人员",
+    "type": "role"
+  },
+  {
+    "id": 9,
+    "name": "测试人员",
+    "type": "role"
+  },
+  {
+    "id": 11,
+    "name": "普通员工",
+    "type": "role"
+  },
+  {
+    "id": 12,
+    "name": "董事办",
+    "type": "role"
+  },
+  {
+    "id": 13,
+    "name": "旅行青蛙",
+    "type": "role"
+  },
+  {
+    "id": 14,
+    "name": "汉武大帝",
+    "type": "role"
+  },
+  {
+    "id": 15,
+    "name": "炎黄子孙",
+    "type": "role"
+  }
+]

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { DEFAULT_BREADCRUMB, WorkflowPersonMap } from "./constants";
+import { DEFAULT_BREADCRUMB, ORG_API_URL, ROLE_API_URL, WorkflowPersonMap } from "./constants";
 import { PersonType } from "@/components/Workflow/types";
 import { Search, Close } from "@element-plus/icons-vue";
 import { CheckboxValueType } from "element-plus";
@@ -18,6 +18,7 @@ const props = defineProps<{
 		(e: "update:modelValue", value: boolean): void;
 		(e: "confirm", checkList: PersonType[]): void;
 	}>();
+
 const dialogTableVisible = ref(props.modelValue),
 	/** 组织架构数据 */
 	orgData = ref<PersonType[]>([]),
@@ -51,6 +52,11 @@ const isIndeterminate = computed(() => {
 	return checkIds.value.length > 0 && checkIds.value.length < flatData.value.length;
 });
 
+/** 数据请求api */
+const apiUrl = computed(() => {
+	return props.type === WorkflowPersonEnum.Role ? ROLE_API_URL : ORG_API_URL;
+});
+
 /** 递归扁平化orgData */
 const flatOrgData = (data: PersonType[]): PersonType[] => {
 	return data.reduce((prev, cur) => {
@@ -70,7 +76,7 @@ const close = () => {
 
 /** 获取公司组织架构 */
 const getCompanyOrg = async () => {
-	const { data } = await axios.get("/json/company.json");
+	const { data } = await axios.get(apiUrl.value);
 	orgData.value = data;
 	pendingOption.value = data;
 };
@@ -172,7 +178,7 @@ defineExpose({
 </script>
 
 <template>
-	<el-dialog v-model="dialogTableVisible" :title="title" width="840" @close="close">
+	<el-dialog v-model="dialogTableVisible" :title="title" width="840" @close="close" @open="getCompanyOrg">
 		<div class="dialog-body">
 			<div class="list">
 				<el-input
@@ -242,9 +248,17 @@ defineExpose({
 </template>
 
 <style scoped lang="scss">
+// 总高度
+$totalHeight: 500px;
+// input 高度
+$inputHeight: 32px;
+// breadcrumb高度
+$breadcrumbHeight: 40px;
+// tools高度
+$toolsHeight: 32px;
 .dialog-body {
 	width: 800px;
-	height: 500px;
+	height: $totalHeight;
 	border-radius: 5px;
 	border: 1px solid #ccc;
 	display: flex;
@@ -261,6 +275,8 @@ defineExpose({
 			margin-top: 5px;
 		}
 		.options {
+			height: calc($totalHeight - $inputHeight - $breadcrumbHeight - $toolsHeight - 7px);
+			overflow-y: auto;
 			.option {
 				width: 100%;
 				padding: 5px 0;
@@ -295,6 +311,7 @@ defineExpose({
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			height: $toolsHeight;
 			.superiors {
 				color: #409eff;
 				cursor: pointer;
@@ -306,6 +323,7 @@ defineExpose({
 		}
 		.breadcrumb {
 			padding: 10px 0;
+			height: $breadcrumbHeight;
 			.text:hover {
 				color: #409eff;
 				cursor: pointer;
