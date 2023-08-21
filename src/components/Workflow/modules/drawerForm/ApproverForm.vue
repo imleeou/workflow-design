@@ -16,16 +16,18 @@ const config = ref<{
 		autoApprove: boolean;
 		directEnd: boolean;
 		assignType: string;
+		nodePerson: PersonType[];
 	}>({
 		autoApprove: props.nodeConfig?.config?.autoApprove || false,
 		directEnd: props.nodeConfig?.config?.directEnd || false,
-		assignType: props.nodeConfig?.config?.assignType || ""
+		assignType: props.nodeConfig?.config?.assignType || "",
+		nodePerson: [...(props.nodeConfig?.nodePerson || [])]
 	}),
-	nodePerson = ref<PersonType[]>(props.nodeConfig?.nodePerson || []),
 	shuttleSelectorTriggerRef = ref<InstanceType<typeof ShuttleSelectorTrigger>>();
 
 const approverChange = (val: string | number | boolean) => {
-	console.log("approverChange", val);
+	config.value.assignType = val as string;
+	config.value.nodePerson = [];
 	shuttleSelectorTriggerRef.value?.clearChecked();
 };
 
@@ -38,7 +40,7 @@ const selectorType = computed(() => {
 const selectorConfirm = () => {
 	emits("configChange", {
 		...props.nodeConfig,
-		nodePerson: [...nodePerson.value],
+		nodePerson: [...config.value.nodePerson],
 		config: { ...config.value }
 	} as WorkflowNodeType);
 };
@@ -64,7 +66,7 @@ watch(
 		<ShuttleSelectorTrigger
 			v-if="selectorType"
 			ref="shuttleSelectorTriggerRef"
-			v-model="nodePerson"
+			v-model="config.nodePerson"
 			:selector-type="selectorType"
 			@confirm="selectorConfirm"
 			>选择人员</ShuttleSelectorTrigger

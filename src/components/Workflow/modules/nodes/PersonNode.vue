@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { NodeType, WorkflowNodeType } from "../../types";
+import { NodeType, WorkflowApproveRadioType, WorkflowNodeType } from "../../types";
 import { Close, ArrowRight } from "@element-plus/icons-vue";
-import { PERSON_NODE_RENDER_INFO, WorkflowNodeTypeEnum } from "../../constants";
+import { PERSON_NODE_RENDER_INFO, WORKFLOW_APPROVER_RADIO_MAP, WorkflowNodeTypeEnum } from "../../constants";
 
 const props = defineProps<{
 		/** 节点信息 */
@@ -13,6 +13,9 @@ const props = defineProps<{
 	}>();
 /** 删除图标是否显示 */
 const isShowCloseIcon = ref(false);
+const propAssignType = computed(() => {
+	return props.modelValue.config?.assignType || "";
+});
 
 /** 鼠标滑入滑出
  * @param direction 0: 滑入 1: 滑出
@@ -35,6 +38,16 @@ const deletePersonNode = () => {
 const currentNodeRender = computed(() => {
 	return PERSON_NODE_RENDER_INFO[props.modelValue?.type as keyof typeof PERSON_NODE_RENDER_INFO];
 });
+
+/** 需要主动选择的类型 */
+const needSelectTypeLabels = WORKFLOW_APPROVER_RADIO_MAP.filter((item: WorkflowApproveRadioType) => !!item.select).map(
+	(item: WorkflowApproveRadioType) => item.label
+);
+/** 获取人员类型label */
+const getPersonTypeLabel = computed(() => {
+	const assign = WORKFLOW_APPROVER_RADIO_MAP.find((item: WorkflowApproveRadioType) => item.label === propAssignType.value);
+	return assign ? (needSelectTypeLabels.includes(propAssignType.value) ? `${assign.text}：` : assign.text) : "";
+});
 </script>
 
 <template>
@@ -53,7 +66,8 @@ const currentNodeRender = computed(() => {
 		</div>
 		<div class="node-content">
 			<div class="pick">
-				<p v-if="props.modelValue.nodePerson?.length">
+				<span v-if="getPersonTypeLabel">{{ getPersonTypeLabel }}</span>
+				<span v-if="props.modelValue.nodePerson?.length">
 					<template v-for="(person, index) in props.modelValue.nodePerson" :key="index">
 						<span>{{ person.name }}</span>
 						<span
@@ -66,8 +80,10 @@ const currentNodeRender = computed(() => {
 							>、</span
 						>
 					</template>
-				</p>
-				<p v-else>{{ currentNodeRender.placeholder }}</p>
+				</span>
+				<span v-if="!props.modelValue.nodePerson?.length && !getPersonTypeLabel">
+					{{ currentNodeRender.placeholder }}
+				</span>
 			</div>
 			<el-icon class="arrow-right"><ArrowRight /></el-icon>
 		</div>
@@ -82,6 +98,11 @@ const currentNodeRender = computed(() => {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+	.pick {
+		p {
+			display: inline-block;
+		}
 	}
 }
 </style>
