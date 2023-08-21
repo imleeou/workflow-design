@@ -3,5 +3,6 @@ import "./style.css";
 import "@/assets/iconfont/index.css";
 import App from "./App.vue";
 import router from "./router";
+import 'element-plus/dist/index.css'
 
 createApp(App).use(router).mount("#app");
