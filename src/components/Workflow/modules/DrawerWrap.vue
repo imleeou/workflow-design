@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, watch } from "vue";
-import { WorkflowNodeType } from "../types";
-import { WorkflowNodeTypeEnum, WORKFLOW_ID_REG } from "../constants";
+import { WorkflowApproveRadioType, WorkflowNodeType } from "../types";
+import { ElNotification } from "element-plus";
+import { WorkflowNodeTypeEnum, WORKFLOW_ID_REG, WORKFLOW_APPROVER_RADIO_MAP } from "../constants";
 import InitiatorForm from "./drawerForm/InitiatorForm.vue";
 import ApproverForm from "./drawerForm/ApproverForm.vue";
 import CcForm from "./drawerForm/CcForm.vue";
@@ -55,6 +56,30 @@ const drawerShow = ref<boolean>(props.modelValue),
 		name: props.nodeConfig?.name
 	});
 
+/** 校验表单 */
+const validateForm = async (): Promise<boolean> => {
+	let result = true;
+	// 判断审批人 | 抄送人 是否指定人员
+	if (saveDrawerData.value?.type === WorkflowNodeTypeEnum.Approver || saveDrawerData.value?.type === WorkflowNodeTypeEnum.Copy) {
+		// 需要选择人员的选项
+		const needSelect = WORKFLOW_APPROVER_RADIO_MAP.filter((i: WorkflowApproveRadioType) => !!i.select);
+		const assType = saveDrawerData.value.config?.assignType;
+		const radio = WORKFLOW_APPROVER_RADIO_MAP.find(r => r.label === assType);
+		// 当选择的类型需要指定时
+		if (assType && needSelect.find(n => n.label === assType) && !saveDrawerData.value.nodePerson?.length) {
+			// 判断选择人员是否未空
+			ElNotification({
+				title: "指定项未选择",
+				message: `请选择【${radio?.text}】`,
+				type: "warning",
+				duration: 2000
+			});
+			result = false;
+		}
+	}
+	return result;
+};
+
 /** 点击取消 */
 const cancel = () => {
 	drawerShow.value = false;
@@ -66,6 +91,7 @@ const confirm = async () => {
 	try {
 		confirmLoading.value = !!props.beforeConfirm;
 		let res = props.beforeConfirm ? await props.beforeConfirm() : true;
+		res = (await validateForm()) ? res : false;
 		confirmLoading.value = false;
 		if (!res) return;
 		emits("confirm");
